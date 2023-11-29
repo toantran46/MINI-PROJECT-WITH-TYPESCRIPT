@@ -12,10 +12,18 @@ export interface ApiResponse {
     totalResults?: string
 }
 
-export interface MovieColumn {
+export interface Column {
     id: string;
     label: string;
     minWidth?: number;
     align?: 'right' | 'center' | 'left' | 'inherit';
     format?: (value: number) => string;
+}
+
+export interface UserInfo {
+    id?: string
+    username: string,
+    email: string,
+    phoneNumber: string
+    address?: string,
 }

@@ -1,13 +1,13 @@
 import React from 'react';
 import SearchBox from '../../components/Search';
-import UserTable from '../../components/Table';
+import MovieTable from '../../components/MovieTable';
 
 const Movies: React.FC = () => {
    
    return (
       <>
         <SearchBox/>
-        <UserTable/>
+        <MovieTable/>
       </>
    )
 }

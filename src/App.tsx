@@ -12,7 +12,7 @@ function App() {
       <Container maxWidth="lg">
         <Paper className='container' elevation={2}>
           <BrowserRouter>
-            <Navbar/> 
+            <Navbar/>
             <Routes>
               <Route path='/' element={<Home/>}></Route>
               <Route path='/movie' element={<Movies/>}></Route>

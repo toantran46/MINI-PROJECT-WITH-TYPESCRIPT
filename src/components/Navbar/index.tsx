@@ -1,7 +1,7 @@
 import { AppBar, Container, List, ListItem, ListItemText, Toolbar } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LightBox from '../LightBox';
+// import LightBox from '../LightBox';
 
 const Navbar: React.FC = () => {
 
@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
                 </ListItem>
               ))}
             </List>
-            <LightBox/>
+            {/* <LightBox/> */}
           </Container>
         </Toolbar>
       </AppBar>
