@@ -5,8 +5,8 @@ import './CreateUserModal.css';
 import { useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { addNewUser } from '../../store/homeSlice';
-import { useAppDispatch } from '../../store/store';
+import { addNewUser, userInfoSelector } from '../../store/homeSlice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const style = {
     position: 'absolute',
@@ -14,22 +14,45 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
+    bgcolor: 'background.default',
+    color: 'text.primary',
     boxShadow: 24,
     pt: 2,
     px: 4,
     pb: 3,
   };
+interface Props {
+    isOpen: boolean,
+    onClose: () => void,
+    userId?: string,
+    children: React.ReactNode
+}
 
-const CreateUserModal: React.FC = () => {
+const CreateUserModal: React.FC<Props> = (props: Props) => {
 
     const [open, setOpen] = useState(false);
+    const [initialData, setInitialData] = useState<UserInfo>()
     const dispatch = useAppDispatch();
-    const handleOpen = () => {
-        setOpen(true);
+    const userList = useAppSelector(userInfoSelector);
+    React.useEffect(() => {
+        if (props.userId) {
+            setInitialData(userList.find(item => item.id === props.userId))
+        } else {
+            setInitialData({
+                username: '',
+                email: '',
+                phoneNumber: '',
+                address: ''
+            })
+        }
+        setOpen(props.isOpen);
+    }, [props.isOpen])
+    
+    const handleClose = () => {
+        setOpen(false);
+        props.onClose();
         reset();
-    }
-    const handleClose = () => setOpen(false);
+    };
     const validationSchema = Yup.object().shape({
         username: Yup.string()
             .required('Username is required')
@@ -49,17 +72,20 @@ const CreateUserModal: React.FC = () => {
         reset,
         formState: {errors}
     } = useForm<UserInfo>({
-        resolver: yupResolver(validationSchema)
+        resolver: yupResolver(validationSchema),
+        defaultValues: {...initialData}
     });
     const onSubmit = (data: UserInfo) => {
-        dispatch(addNewUser(data))
+        dispatch(addNewUser(
+            {
+                ...data, 
+                id: props.userId ? props.userId : ''
+            }))
         reset();
-        setOpen(false);
-    }
-    
+        handleClose();
+    } 
    return (
       <div className='mb-3'>
-        <Button variant="contained" onClick={handleOpen}>Create a User</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -67,10 +93,10 @@ const CreateUserModal: React.FC = () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={{...style,  width: 600}}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Create new User
+            <Typography id="modal-modal-title" variant="h6" component="h2" className='mb-4 text-center'>
+                {props.userId ? 'Edit User' : 'Create new User'}
             </Typography>
-                <Typography mt={2} id="modal-modal-description">
+                <Typography component={'span'} mt={2} id="modal-modal-description">
                     <div className='register-form'>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group">
@@ -83,6 +109,7 @@ const CreateUserModal: React.FC = () => {
                                     fullWidth
                                     error={errors.username ? true : false}
                                     helperText={errors.username?.message}
+                                    defaultValue={initialData?.username}
                                 />
                             </div>
                             <div className="form-group">
@@ -95,6 +122,7 @@ const CreateUserModal: React.FC = () => {
                                     fullWidth
                                     error={errors.email ? true : false}
                                     helperText={errors.email?.message}
+                                    defaultValue={initialData?.email}
                                 />
                             </div>
                             <div className="form-group">
@@ -108,6 +136,7 @@ const CreateUserModal: React.FC = () => {
                                     fullWidth
                                     error={errors.phoneNumber ? true : false}
                                     helperText={errors.phoneNumber?.message}
+                                    defaultValue={initialData?.phoneNumber}
                                 />
                             </div>
                             <div className="form-group">
@@ -118,15 +147,17 @@ const CreateUserModal: React.FC = () => {
                                     placeholder='Address...'
                                     fullWidth
                                     {...register('address')}
+                                    defaultValue={initialData?.address}
                                 />
                             </div>
                             <div className="float-right">
                                 <Button type='submit' variant="contained" className='mr-2'>
-                                    Submit
+                                {props.userId ? 'Save' : 'Submit'}
                                 </Button>
+                                {!props.userId && 
                                 <Button onClick={() => reset()} variant="contained" color='warning' className='mr-2'>
                                     Reset
-                                </Button>
+                                </Button>}
                                 <Button onClick={() => handleClose()} variant="outlined">
                                     Close
                                 </Button>

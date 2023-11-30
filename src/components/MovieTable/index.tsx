@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 const MovieTable: React.FC = () => {
-   const searchKey = useAppSelector((state) => state.Search.searchInput);
+   const searchKey = useAppSelector((state) => state.Slice.searchInput);
    
    const { isPending, error, data } = useQuery({
       queryKey: [searchKey],
