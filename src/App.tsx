@@ -1,39 +1,42 @@
 import './App.css';
 import Paper from '@mui/material/Paper';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Movies from './pages/Movie';
-import Home from './pages/Home';
-import Container from '@mui/material/Container'
-import React from 'react';
-import { ThemeProvider } from '@emotion/react';
 import { useAppSelector } from './store/store';
+import Navbar from './components/Navbar';
+import Movie from './pages/Movie';
+import Home from './pages/Home';
+import { ThemeProvider } from '@emotion/react';
 import { isDarkModeSelector } from './store/homeSlice';
 import { darkTheme, lightTheme } from './theme/theme';
+import { Container } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useMemo } from 'react';
+import { ROUTER_PATH } from './constants/Constants';
 
-function App() {
+const App = () => {
   
+  const queryClient = new QueryClient();
   const prefersDarkMode = useAppSelector(isDarkModeSelector);
-  const theme = React.useMemo(()=> {
+  const theme = useMemo(() => {
     return prefersDarkMode ? darkTheme : lightTheme;
   }, [prefersDarkMode])
 
   return (
-    <div className='app'>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-          <Container maxWidth="lg">
-            <Paper className='container' elevation={2}>
-              <BrowserRouter>
+          <BrowserRouter>
+              <Paper sx={{height: "100vh"}} elevation={3}>
                 <Navbar/>
-                <Routes>
-                  <Route path='/' element={<Home/>}></Route>
-                  <Route path='/movie' element={<Movies/>}></Route>
-                </Routes>
-              </BrowserRouter>
-            </Paper>
-          </Container>
+                <Container maxWidth="lg">
+                  <Routes>
+                    <Route path={ROUTER_PATH.HOME} element={<Home/>}/>
+                    <Route path={ROUTER_PATH.MOVIE} element={<Movie/>}/>
+                  </Routes>
+                </Container>
+              </Paper>
+          </BrowserRouter>
       </ThemeProvider>
-    </div>
+    </QueryClientProvider>
   )
 }
 

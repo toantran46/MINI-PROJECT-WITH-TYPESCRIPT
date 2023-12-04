@@ -1,4 +1,3 @@
-import React from 'react';
 import { Column } from '../../types/types';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -6,6 +5,7 @@ import { removeUser, userInfoSelector } from '../../store/homeSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CreateUserModal from '../CreateUserModal';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 
 const columns: Column[] = [
    { id: 'username', label: 'Username', minWidth: 160, align: "left" },
@@ -15,12 +15,12 @@ const columns: Column[] = [
    { id: 'action', label: 'Action', minWidth: 100, align: "center" },
 ]
 
-const UserTable: React.FC = () => {
+const UserTable = () => {
    
-   const [isOpenModal, setIsOpenModal] = React.useState(false);
-   const [userId, setUserId] = React.useState<string | undefined>('');
-   const [page, setPage] = React.useState(0);
-   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+   const [isOpenModal, setIsOpenModal] = useState(false);
+   const [userId, setUserId] = useState<string | undefined>('');
+   const [page, setPage] = useState(0);
+   const [rowsPerPage, setRowsPerPage] = useState(5);
    
    const dispatch = useAppDispatch();
    const userList = useAppSelector(userInfoSelector);
@@ -33,11 +33,12 @@ const UserTable: React.FC = () => {
       setUserId('')
    }
 
-   const handleChangePage = (event: unknown, newPage: number) => {
+   const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+      event?.preventDefault()
       setPage(newPage);
    };
 
-   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
       setRowsPerPage(+parseInt(event.target.value));
       setPage(0);
    };

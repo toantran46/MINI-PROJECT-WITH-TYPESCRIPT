@@ -1,12 +1,12 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import * as Yup from 'yup';
+import { useEffect, useState } from 'react';
 import './CreateUserModal.css';
 import { useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addNewUser, userInfoSelector } from '../../store/homeSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { validationSchema } from '../../yup/schema';
 
 const style = {
     position: 'absolute',
@@ -28,13 +28,13 @@ interface Props {
     children: React.ReactNode
 }
 
-const CreateUserModal: React.FC<Props> = (props: Props) => {
+const CreateUserModal = (props: Props) => {
 
     const [open, setOpen] = useState(false);
     const [initialData, setInitialData] = useState<UserInfo>()
     const dispatch = useAppDispatch();
     const userList = useAppSelector(userInfoSelector);
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.userId) {
             setInitialData(userList.find(item => item.id === props.userId))
         } else {
@@ -53,18 +53,6 @@ const CreateUserModal: React.FC<Props> = (props: Props) => {
         props.onClose();
         reset();
     };
-    const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required('Username is required')
-            .min(4, 'Username must be at least 4 characters'),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        phoneNumber: Yup.string()
-            .required('Phone number is required')
-            .length(10, 'Phone number is invalid, must be 10 number'),
-        address: Yup.string()
-    })
 
     const {
         register,

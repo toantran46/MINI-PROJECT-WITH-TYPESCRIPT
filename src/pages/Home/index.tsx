@@ -1,14 +1,11 @@
-import React from 'react';
 import UserTable from '../../components/UserTable';
 
 
-const Home: React.FC = () => {
+const Home = () => {
    
    return (
-      <>
-         <UserTable/>
-      </>
+      <UserTable/>
    )
 }
 
-export default Home
+export default Home;

@@ -1,36 +1,29 @@
 import { AppBar, Container, List, ListItem, ListItemText, Toolbar } from '@mui/material';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import LightBox from '../LightBox';
+import { navLinks } from '../../common/common';
+import { flexBetweenSpace } from '../styles/style';
 
-const Navbar: React.FC = () => {
-
-  const navLinks = [
-      { title: "Home", path: "/" },
-      { title: "Movie", path: "/movie" },
-  ];
-  
+const Navbar = () => {  
   return (
-    <div className='mb-3'>
-      <AppBar position="static">
-        <Toolbar>
-          <Container maxWidth="lg" className="d-flex justify-content-between">
-            <List
-              component="nav"
-              aria-labelledby="main navigation"
-              className='d-flex justify-content-between'
-            >
-              {navLinks.map(({ title, path }) => (
-                <ListItem button key={title} component={Link} to={path}>
-                  <ListItemText primary={title} />
-                </ListItem>
-              ))}
-            </List>
-            <LightBox/>
-          </Container>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar sx={{marginBottom: 3}} position="static">
+      <Toolbar>
+        <Container sx={flexBetweenSpace} maxWidth="lg">
+          <List
+            component="nav"
+            aria-labelledby="main navigation"
+            sx={flexBetweenSpace}
+          >
+            {navLinks.map(({ title, path }) => (
+              <ListItem button key={title} component={Link} to={path}>
+                <ListItemText primary={title} />
+              </ListItem>
+            ))}
+          </List>
+          <LightBox/>
+        </Container>
+      </Toolbar>
+    </AppBar>
   )
 }
 

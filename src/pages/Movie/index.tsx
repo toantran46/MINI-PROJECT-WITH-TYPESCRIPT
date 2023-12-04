@@ -1,8 +1,7 @@
-import React from 'react';
 import SearchBox from '../../components/Search';
 import MovieTable from '../../components/MovieTable';
 
-const Movies: React.FC = () => {
+const Movie = () => {
    
    return (
       <>
@@ -12,4 +11,4 @@ const Movies: React.FC = () => {
    )
 }
 
-export default Movies
+export default Movie

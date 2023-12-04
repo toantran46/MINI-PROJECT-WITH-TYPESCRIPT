@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 import { Paper, TablePagination, Typography } from '@mui/material';
 import { useAppSelector } from '../../store/store';
@@ -10,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useState } from 'react';
 
 const columns: Column[] = [
    { id: 'Poster', label: 'Poster', minWidth: 160, align: "center" },
@@ -19,10 +19,10 @@ const columns: Column[] = [
    { id: 'Year', label: 'Year', minWidth: 100, align: "right" },
 ]
 
-const MovieTable: React.FC = () => {
+const MovieTable = () => {
    const searchKey = useAppSelector((state) => state.Slice.searchInput);
-   const [totalResult, setTotalResult] = React.useState<number>(0);
-   const [pageInfoState, setPageInfoState] = React.useState({
+   const [totalResult, setTotalResult] = useState<number>(0);
+   const [pageInfoState, setPageInfoState] = useState({
       page: 0,
       rowsPerPage: 10
    })

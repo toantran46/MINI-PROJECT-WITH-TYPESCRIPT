@@ -1,11 +1,11 @@
-import React, {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
 import FormControl from '@mui/material/FormControl';
 import { useAppDispatch } from '../../store/store';
 import { onSearchChange } from '../../store/homeSlice';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField'
 
-const SearchBox: React.FC = () => {
+const SearchBox = () => {
    
    const [searchKey, setSearchKey] = useState<string>('');
    const dispatch = useAppDispatch();
