@@ -87,7 +87,7 @@ const UserTable: React.FC = () => {
                         <Button onClick={() => handleEditUser(user.id)} size="small">
                             <EditIcon ></EditIcon>
                         </Button>
-                        <Button onClick={() => dispatch(removeUser(user.id))} size="small">
+                        <Button color='secondary' onClick={() => dispatch(removeUser(user.id))} size="small">
                             <DeleteIcon></DeleteIcon>
                         </Button>
                      </TableCell>
