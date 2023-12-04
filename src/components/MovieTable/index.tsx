@@ -53,7 +53,10 @@ const MovieTable: React.FC = () => {
          <TableContainer component={Paper}>
          {isPending ? <p>Loading...</p> :
             <div>
-               <p className='p-2'>Search for: <span className='font-weight-bold'>{searchKey}</span></p>
+               <div className='p-2'>
+                  <p className='mb-1'>Search for: <span className='font-weight-bold'>{searchKey}</span></p>
+                  <p>Total results: <span className='font-weight-bold'>{totalResult}</span></p>
+               </div>
                <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                      <TableRow>
@@ -79,7 +82,6 @@ const MovieTable: React.FC = () => {
                      data?.Search?.map((movie) => (
                      <TableRow
                         key={movie.imdbID}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                      >
                         <TableCell align="center">
                            <img width={100} height={100} src={movie.Poster} alt="" />
