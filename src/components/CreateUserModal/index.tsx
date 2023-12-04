@@ -84,7 +84,8 @@ const CreateUserModal: React.FC<Props> = (props: Props) => {
         reset();
         handleClose();
     } 
-   return (
+
+    return (
       <div className='mb-3'>
         <Modal
             open={open}
@@ -93,9 +94,9 @@ const CreateUserModal: React.FC<Props> = (props: Props) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={{...style,  width: 600}}>
-            <Typography id="modal-modal-title" variant="h6" component="h2" className='mb-4 text-center'>
-                {props.userId ? 'Edit User' : 'Create new User'}
-            </Typography>
+                <Typography id="modal-modal-title" variant="h6" component="h2" className='mb-4 text-center'>
+                    {props.userId ? 'Edit User' : 'Create new User'}
+                </Typography>
                 <Typography component={'span'} mt={2} id="modal-modal-description">
                     <div className='register-form'>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -168,7 +169,7 @@ const CreateUserModal: React.FC<Props> = (props: Props) => {
             </Box>
         </Modal>
       </div>
-   )
+    )
 }
 
 export default CreateUserModal;

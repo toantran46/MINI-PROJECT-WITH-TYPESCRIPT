@@ -7,18 +7,19 @@ import { onChangeDarkMode } from '../../store/homeSlice';
 import { Button } from '@mui/material';
 
 const LightBox: React.FC = () => {
-const theme = useTheme();
-const dispatch = useAppDispatch()
-const handleChangeMode = () => {
-    dispatch(onChangeDarkMode())
-}
-    return (
-        <div className='d-flex'>
-            <Button onClick={handleChangeMode} color="inherit">
-                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </Button>
-        </div>
-    )
-}
+    
+    const theme = useTheme();
+    const dispatch = useAppDispatch()
+    const handleChangeMode = () => {
+        dispatch(onChangeDarkMode())
+    }
+        return (
+            <div className='d-flex'>
+                <Button onClick={handleChangeMode} color="inherit">
+                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </Button>
+            </div>
+        )
+    }
 
 export default LightBox;

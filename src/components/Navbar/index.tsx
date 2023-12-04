@@ -5,13 +5,14 @@ import LightBox from '../LightBox';
 
 const Navbar: React.FC = () => {
 
-    const navLinks = [
-        { title: "Home", path: "/" },
-        { title: "Movie", path: "/movie" },
-    ];
-   return (
-      <div className='mb-3'>
-        <AppBar position="static">
+  const navLinks = [
+      { title: "Home", path: "/" },
+      { title: "Movie", path: "/movie" },
+  ];
+  
+  return (
+    <div className='mb-3'>
+      <AppBar position="static">
         <Toolbar>
           <Container maxWidth="lg" className="d-flex justify-content-between">
             <List
@@ -29,8 +30,8 @@ const Navbar: React.FC = () => {
           </Container>
         </Toolbar>
       </AppBar>
-      </div>
-   )
+    </div>
+  )
 }
 
 export default Navbar;

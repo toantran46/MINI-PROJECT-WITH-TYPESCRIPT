@@ -13,10 +13,10 @@ import TableRow from '@mui/material/TableRow';
 
 const columns: Column[] = [
    { id: 'Poster', label: 'Poster', minWidth: 160, align: "center" },
-   { id: 'imdbID', label: 'imdbID', minWidth: 160, align: "right" },
-   { id: 'Title', label: 'Title', minWidth: 160, align: "right" },
-   { id: 'Type', label: 'Type', minWidth: 160, align: "right" },
-   { id: 'Year', label: 'Year', minWidth: 160, align: "right" },
+   { id: 'imdbID', label: 'imdbID', minWidth: 160, align: "left" },
+   { id: 'Title', label: 'Title', minWidth: 160, align: "left" },
+   { id: 'Type', label: 'Type', minWidth: 100, align: "left" },
+   { id: 'Year', label: 'Year', minWidth: 100, align: "right" },
 ]
 
 const MovieTable: React.FC = () => {
@@ -49,7 +49,8 @@ const MovieTable: React.FC = () => {
          ...pageInfoState,
          page: newPage
       });
-    };
+   };
+   
    return (
       <div>
          <TableContainer component={Paper}>
@@ -88,11 +89,11 @@ const MovieTable: React.FC = () => {
                         <TableCell align="center">
                            <img width={100} height={100} src={movie.Poster} alt="" />
                         </TableCell>
-                        <TableCell component="th" align="right" scope="row">
+                        <TableCell component="th" align="left" scope="row">
                            {movie.imdbID}
                         </TableCell>
-                        <TableCell align="right">{movie.Title}</TableCell>
-                        <TableCell align="right">{movie.Type}</TableCell>
+                        <TableCell align="left">{movie.Title}</TableCell>
+                        <TableCell align="left">{movie.Type}</TableCell>
                         <TableCell align="right">{movie.Year}</TableCell>
                      </TableRow>
                      ))}

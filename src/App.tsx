@@ -12,6 +12,7 @@ import { isDarkModeSelector } from './store/homeSlice';
 import { darkTheme, lightTheme } from './theme/theme';
 
 function App() {
+  
   const prefersDarkMode = useAppSelector(isDarkModeSelector);
   const theme = React.useMemo(()=> {
     return prefersDarkMode ? darkTheme : lightTheme;

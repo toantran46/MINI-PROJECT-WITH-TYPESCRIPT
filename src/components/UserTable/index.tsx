@@ -8,14 +8,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import CreateUserModal from '../CreateUserModal';
 
 const columns: Column[] = [
-   { id: 'username', label: 'Username', minWidth: 160, align: "right" },
-   { id: 'email', label: 'Email', minWidth: 160, align: "right" },
-   { id: 'phoneNumber', label: 'Phone number', minWidth: 160, align: "right" },
-   { id: 'address', label: 'Address', minWidth: 160, align: "right" },
-   { id: 'action', label: 'Action', minWidth: 160, align: "center" },
+   { id: 'username', label: 'Username', minWidth: 160, align: "left" },
+   { id: 'email', label: 'Email', minWidth: 160, align: "left" },
+   { id: 'phoneNumber', label: 'Phone number', minWidth: 160, align: "left" },
+   { id: 'address', label: 'Address', minWidth: 160, align: "left" },
+   { id: 'action', label: 'Action', minWidth: 100, align: "center" },
 ]
 
 const UserTable: React.FC = () => {
+   
    const [isOpenModal, setIsOpenModal] = React.useState(false);
    const [userId, setUserId] = React.useState<string | undefined>('');
    const [page, setPage] = React.useState(0);
@@ -71,16 +72,16 @@ const UserTable: React.FC = () => {
                   <TableRow
                      key={user.username}
                   >
-                     <TableCell align="right">
+                     <TableCell align="left">
                         {user.username}
                      </TableCell>
-                     <TableCell align="right">
+                     <TableCell align="left">
                         {user.email}
                      </TableCell>
-                     <TableCell align="right">
+                     <TableCell align="left">
                         {user.phoneNumber}
                      </TableCell>
-                     <TableCell align="right">
+                     <TableCell align="left">
                         {user.address}
                      </TableCell>
                      <TableCell align="center">

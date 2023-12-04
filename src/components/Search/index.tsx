@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField'
 
 const SearchBox: React.FC = () => {
+   
    const [searchKey, setSearchKey] = useState<string>('');
    const dispatch = useAppDispatch();
    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
