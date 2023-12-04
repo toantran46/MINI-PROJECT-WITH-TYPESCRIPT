@@ -11,6 +11,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
+const columns: Column[] = [
+   { id: 'Poster', label: 'Poster', minWidth: 160, align: "center" },
+   { id: 'imdbID', label: 'imdbID', minWidth: 160, align: "right" },
+   { id: 'Title', label: 'Title', minWidth: 160, align: "right" },
+   { id: 'Type', label: 'Type', minWidth: 160, align: "right" },
+   { id: 'Year', label: 'Year', minWidth: 160, align: "right" },
+]
+
 const MovieTable: React.FC = () => {
    const searchKey = useAppSelector((state) => state.Slice.searchInput);
    const [totalResult, setTotalResult] = React.useState<number>(0);
@@ -34,13 +42,7 @@ const MovieTable: React.FC = () => {
             .catch((error) => console.log(error)),
       })
    if (error) return 'An error has occurred: ' + error.message;
-   const columns: Column[] = [
-      { id: 'Poster', label: 'Poster', minWidth: 160, align: "center" },
-      { id: 'imdbID', label: 'imdbID', minWidth: 160, align: "right" },
-      { id: 'Title', label: 'Title', minWidth: 160, align: "right" },
-      { id: 'Type', label: 'Type', minWidth: 160, align: "right" },
-      { id: 'Year', label: 'Year', minWidth: 160, align: "right" },
-   ]
+
    const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
       event?.preventDefault();
       setPageInfoState({

@@ -1,9 +1,9 @@
 import React, {useState, ChangeEvent, FormEvent} from 'react';
 import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import { useAppDispatch } from '../../store/store';
 import { onSearchChange } from '../../store/homeSlice';
 import { Button } from '@mui/material';
+import TextField from '@mui/material/TextField'
 
 const SearchBox: React.FC = () => {
    const [searchKey, setSearchKey] = useState<string>('');
@@ -21,7 +21,7 @@ const SearchBox: React.FC = () => {
          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <FormControl>
                <div className='d-flex'>
-                  <OutlinedInput onChange={handleSearchChange} value={searchKey} placeholder="Search here..." />
+                  <TextField size='small' onChange={handleSearchChange} value={searchKey} placeholder="Search here..." />
                   <Button variant="contained" type='submit'>Search</Button>
                </div>
             </FormControl>
