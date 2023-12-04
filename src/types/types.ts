@@ -9,7 +9,7 @@ export interface Movie {
 export interface ApiResponse {
     Response?: string,
     Search: Movie[],
-    totalResults?: string
+    totalResults: number
 }
 
 export interface Column {

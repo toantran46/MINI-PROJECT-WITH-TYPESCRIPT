@@ -1,6 +1,6 @@
 import React from 'react';
 import { Column } from '../../types/types';
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { removeUser, userInfoSelector } from '../../store/homeSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -48,7 +48,15 @@ const UserTable: React.FC = () => {
                   </TableRow>
                </TableHead>
                <TableBody>
-                  {userList?.map((user) => (
+                  {userList?.length === 0 
+                  ? 
+                  <TableRow>
+                     <TableCell colSpan={5} align="center">
+                        <Typography>No data</Typography>
+                     </TableCell>
+                  </TableRow>
+                  :
+                  userList?.map((user) => (
                   <TableRow
                      key={user.username}
                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
