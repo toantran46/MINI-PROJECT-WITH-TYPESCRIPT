@@ -5,24 +5,18 @@ import Navbar from './components/Navbar';
 import Movies from './pages/Movie';
 import Home from './pages/Home';
 import Container from '@mui/material/Container'
-import { createTheme } from '@mui/material';
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { useAppSelector } from './store/store';
 import { isDarkModeSelector } from './store/homeSlice';
+import { darkTheme, lightTheme } from './theme/theme';
 
 function App() {
   const prefersDarkMode = useAppSelector(isDarkModeSelector);
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  );
+  const theme = React.useMemo(()=> {
+    return prefersDarkMode ? darkTheme : lightTheme;
+  }, [prefersDarkMode])
+  
   return (
     <ThemeProvider theme={theme}>
       <div className='app'>
