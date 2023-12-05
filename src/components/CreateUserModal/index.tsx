@@ -1,26 +1,13 @@
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, FormGroup, Modal, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import './CreateUserModal.css';
-import { useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addNewUser, userInfoSelector } from '../../store/homeSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { validationSchema } from '../../yup/schema';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.default',
-    color: 'text.primary',
-    boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
-  };
+import { formGroup, formLabel, userModalStyle } from '../styles/styles';
 interface Props {
     isOpen: boolean,
     onClose: () => void,
@@ -56,7 +43,7 @@ const CreateUserModal = (props: Props) => {
 
     const {
         register,
-        handleSubmit,
+        control,
         reset,
         formState: {errors}
     } = useForm<UserInfo>({
@@ -74,22 +61,26 @@ const CreateUserModal = (props: Props) => {
     } 
 
     return (
-      <div className='mb-3'>
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={{...style,  width: 600}}>
-                <Typography id="modal-modal-title" variant="h6" component="h2" className='mb-4 text-center'>
+            <Box sx={userModalStyle}>
+                <Typography 
+                    id="modal-modal-title" 
+                    variant="h6" 
+                    component="h2"
+                    textAlign='center'
+                    mb={3}>
                     {props.userId ? 'Edit User' : 'Create new User'}
                 </Typography>
                 <Typography component={'span'} mt={2} id="modal-modal-description">
-                    <div className='register-form'>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="form-group">
-                                <label>Username</label>
+                    <Box>
+                        <Form onSubmit={(data) => onSubmit(data.data)} control={control}>
+                            <FormGroup sx={formGroup}>
+                                <Typography sx={formLabel}>Username</Typography>
                                 <TextField 
                                     id="username"
                                     variant="outlined"
@@ -100,9 +91,9 @@ const CreateUserModal = (props: Props) => {
                                     helperText={errors.username?.message}
                                     defaultValue={initialData?.username}
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label>Email</label>
+                            </FormGroup>
+                            <FormGroup sx={formGroup}>
+                                <Typography sx={formLabel}>Email</Typography>
                                 <TextField 
                                     id="email"
                                     variant="outlined"
@@ -113,9 +104,9 @@ const CreateUserModal = (props: Props) => {
                                     helperText={errors.email?.message}
                                     defaultValue={initialData?.email}
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label>Phone number</label>
+                            </FormGroup>
+                            <FormGroup sx={formGroup}>
+                                <Typography sx={formLabel}>Phone number</Typography>
                                 <TextField
                                     id="phoneNumber"
                                     variant="outlined"
@@ -127,9 +118,9 @@ const CreateUserModal = (props: Props) => {
                                     helperText={errors.phoneNumber?.message}
                                     defaultValue={initialData?.phoneNumber}
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label>Address</label>
+                            </FormGroup>
+                            <FormGroup sx={formGroup}>
+                                <Typography sx={formLabel}>Address</Typography>
                                 <TextField 
                                     id="address"
                                     variant="outlined"
@@ -138,25 +129,24 @@ const CreateUserModal = (props: Props) => {
                                     {...register('address')}
                                     defaultValue={initialData?.address}
                                 />
-                            </div>
-                            <div className="float-right">
-                                <Button type='submit' variant="contained" className='mr-2'>
-                                {props.userId ? 'Save' : 'Submit'}
+                            </FormGroup>
+                            <Box component='div' sx={{float: 'right'}}>
+                                <Button type='submit' variant="contained" sx={{marginRight: 2}}>
+                                    {props.userId ? 'Save' : 'Submit'}
                                 </Button>
-                                {!props.userId && 
-                                <Button onClick={() => reset()} variant="contained" color='warning' className='mr-2'>
+                                    {!props.userId && 
+                                <Button onClick={() => reset()} variant="contained" color='warning' sx={{marginRight: 2}}>
                                     Reset
                                 </Button>}
-                                <Button onClick={() => handleClose()} variant="outlined">
+                                <Button onClick={handleClose} variant="outlined">
                                     Close
                                 </Button>
-                            </div>
-                        </form>
-                    </div>
+                            </Box>
+                        </Form>
+                    </Box>
                 </Typography>
             </Box>
         </Modal>
-      </div>
     )
 }
 

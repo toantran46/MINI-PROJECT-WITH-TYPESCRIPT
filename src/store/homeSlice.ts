@@ -2,18 +2,18 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { UserInfo } from "../types/types";
-import { dummyData } from "../common/dummyData";
+import { userInfoDummy } from "../common/dummyData";
 import { GenerateUUid } from "../common/common";
 
-export interface Slice  {
+export interface UserSlice  {
     searchInput: string,
     userInfo: UserInfo[],
     isDarkMode: boolean
 }
 
-const initialState: Slice = {
-    searchInput: 'Dragon',
-    userInfo: dummyData.userInfoDummy,
+const initialState: UserSlice = {
+    searchInput: '',
+    userInfo: userInfoDummy,
     isDarkMode: false
 }
 
@@ -44,11 +44,9 @@ export const HomeSlice = createSlice({
     }
 })
 
-
-
-const searchInput = (state: RootState) => state.Slice.searchInput;
-const userInfo = (state: RootState) => state.Slice.userInfo;
-const isDarkMode = (state: RootState) => state.Slice.isDarkMode;
+const searchInput = (state: RootState) => state.UserSlice.searchInput;
+const userInfo = (state: RootState) => state.UserSlice.userInfo;
+const isDarkMode = (state: RootState) => state.UserSlice.isDarkMode;
 export const searchInputSelector = createSelector(searchInput, (searchInput) => {
     return searchInput;
 });

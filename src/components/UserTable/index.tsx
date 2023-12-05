@@ -26,15 +26,15 @@ const UserTable = () => {
    const userList = useAppSelector(userInfoSelector);
    const handleEditUser = (id: string | undefined) => {
       setIsOpenModal(true);
-      setUserId(id)
+      setUserId(id);
    }
    const handleCreateUser = () => {
       setIsOpenModal(true);
-      setUserId('')
+      setUserId('');
    }
 
    const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-      event?.preventDefault()
+      event?.preventDefault();
       setPage(newPage);
    };
 
@@ -44,8 +44,8 @@ const UserTable = () => {
    };
    
    return (
-      <div>
-         <Button variant="contained" className='mb-3 float-right' onClick={() => handleCreateUser()}>Create new user</Button>
+      <>
+         <Button variant="contained" sx={{marginBottom: 3, float: 'right'}} onClick={handleCreateUser}>Create new user</Button>
          <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="user list table">
                <TableHead>
@@ -87,10 +87,10 @@ const UserTable = () => {
                      </TableCell>
                      <TableCell align="center">
                         <Button onClick={() => handleEditUser(user.id)} size="small">
-                            <EditIcon ></EditIcon>
+                            <EditIcon/>
                         </Button>
                         <Button color='secondary' onClick={() => dispatch(removeUser(user.id))} size="small">
-                            <DeleteIcon></DeleteIcon>
+                            <DeleteIcon/>
                         </Button>
                      </TableCell>
                   </TableRow>
@@ -112,7 +112,7 @@ const UserTable = () => {
             userId={userId}
             onClose={() => setIsOpenModal(false)}>
          </CreateUserModal>
-      </div>
+      </>
    )
 }
 

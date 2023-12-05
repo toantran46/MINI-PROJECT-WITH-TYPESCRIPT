@@ -2,11 +2,11 @@ import { AppBar, Container, List, ListItem, ListItemText, Toolbar } from '@mui/m
 import { Link } from 'react-router-dom';
 import LightBox from '../LightBox';
 import { navLinks } from '../../common/common';
-import { flexBetweenSpace } from '../styles/style';
+import { flexBetweenSpace } from '../styles/styles';
 
 const Navbar = () => {  
   return (
-    <AppBar sx={{marginBottom: 3}} position="static">
+    <AppBar sx={{marginBottom: 3}} position="sticky">
       <Toolbar>
         <Container sx={flexBetweenSpace} maxWidth="lg">
           <List

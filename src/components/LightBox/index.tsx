@@ -3,7 +3,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useAppDispatch } from '../../store/store';
 import { onChangeDarkMode } from '../../store/homeSlice';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const LightBox = () => {
     
@@ -13,11 +13,11 @@ const LightBox = () => {
         dispatch(onChangeDarkMode())
     }
         return (
-            <div className='d-flex'>
+            <Box display={'flex'}>
                 <Button onClick={handleChangeMode} color="inherit">
                     {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </Button>
-            </div>
+            </Box>
         )
     }
 

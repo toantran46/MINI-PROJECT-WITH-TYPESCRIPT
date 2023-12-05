@@ -12,3 +12,4 @@ export const navLinks = [
     { title: ROUTER_NAME.HOME, path: ROUTER_PATH.HOME },
     { title: ROUTER_NAME.MOVIE, path: ROUTER_PATH.MOVIE },
 ];
+

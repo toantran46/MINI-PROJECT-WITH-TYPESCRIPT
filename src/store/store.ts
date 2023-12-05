@@ -4,7 +4,7 @@ import { HomeSlice } from "./homeSlice";
 
 const store = configureStore({
     reducer: {
-        Slice: HomeSlice.reducer
+        UserSlice: HomeSlice.reducer
     }
 })
 

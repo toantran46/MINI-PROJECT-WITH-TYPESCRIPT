@@ -21,3 +21,10 @@ export const VALIDATION_MESSAGE = {
         PHONE_NUMBER: "Phone number is invalid, must be 10 number"
     }
 }
+
+export const URL_SERVICE = {
+    MOVIE: {
+        GET: 'https://www.omdbapi.com/',
+        TOKEN: '97a98665'
+    }
+}

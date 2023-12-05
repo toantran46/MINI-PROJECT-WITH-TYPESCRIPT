@@ -1,5 +1,5 @@
 export interface Movie {
-    imdbID: string,
+    Id: string,
     Title?: string,
     Poster?: string,
     Year?: string,
@@ -9,7 +9,7 @@ export interface Movie {
 export interface ApiResponse {
     Response?: string,
     Search: Movie[],
-    totalResults: number
+    totalResults?: number
 }
 
 export interface Column {

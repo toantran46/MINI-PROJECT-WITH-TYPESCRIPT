@@ -1,33 +1,40 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
-import FormControl from '@mui/material/FormControl';
+import { ChangeEvent } from 'react';
 import { useAppDispatch } from '../../store/store';
 import { onSearchChange } from '../../store/homeSlice';
-import { Button } from '@mui/material';
+import { Box, InputAdornment } from '@mui/material';
 import TextField from '@mui/material/TextField'
+import SearchIcon from '@mui/icons-material/Search';
 
 const SearchBox = () => {
    
-   const [searchKey, setSearchKey] = useState<string>('');
    const dispatch = useAppDispatch();
+   let timer: number;
+   const debounceTime = 1500;
    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setSearchKey(event.target.value);
+      debouncedSearch(event.target.value);
    }
-   const handleSubmit = (event: FormEvent) => {
-      event.preventDefault();
-      dispatch(onSearchChange(searchKey));
-      setSearchKey('');
+   const debouncedSearch = (searchKey: string) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+         dispatch(onSearchChange(searchKey));
+      }, debounceTime);
    }
+
    return (
-      <div className='search-box d-flex float-right'>
-         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <FormControl>
-               <div className='d-flex'>
-                  <TextField size='small' onChange={handleSearchChange} value={searchKey} placeholder="Search here..." />
-                  <Button variant="contained" type='submit'>Search</Button>
-               </div>
-            </FormControl>
-         </form>
-      </div>
+      <Box sx={{display: 'flex', float: 'right', marginBottom: 2}}>
+         <TextField
+            size='small' 
+            onChange={handleSearchChange}
+            placeholder="Search here..."
+            InputProps={{
+               startAdornment: (
+                  <InputAdornment position="start">
+                     <SearchIcon/>
+                  </InputAdornment>
+               )
+            }}
+         />
+      </Box>
    )
 }
 
