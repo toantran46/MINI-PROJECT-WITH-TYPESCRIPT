@@ -54,7 +54,7 @@ const UserTable = () => {
                         <TableCell
                            key={column.id}
                            align={column.align}
-                           style={{ minWidth: column.minWidth }}
+                           style={{ minWidth: column.minWidth, fontWeight: 600 }}
                         >
                            {column.label}
                         </TableCell>
@@ -98,6 +98,7 @@ const UserTable = () => {
                </TableBody>
             </Table>
          </TableContainer>
+         {userList?.length > 0 && 
          <TablePagination
             component="div"
             rowsPerPageOptions={[5, 10, 20]}
@@ -107,6 +108,7 @@ const UserTable = () => {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
          />
+         }
          <CreateUserModal
             isOpen={isOpenModal}
             userId={userId}

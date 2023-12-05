@@ -42,20 +42,23 @@ const MovieTable = () => {
       <TableContainer component={Paper}>
          {isLoading ? <Typography>Loading...</Typography> :
          <Box>
-            <Box p={2} sx={flexBetweenSpace}>
-               <Typography mb={1} display={'flex'} alignItems={'center'}>
-                  Search for: <Typography fontWeight={'bold'}>{searchKey}</Typography>
-               </Typography>
-               <TablePagination
-                  component="div"
-                  onPageChange={handlePageChange}
-                  page={pageInfoState.page}
-                  count={totalResult}
-                  rowsPerPage={10}
-                  rowsPerPageOptions={[]}
-               >
-               </TablePagination>
-            </Box>
+            {searchKey && 
+               <Box p={2} sx={flexBetweenSpace}>
+                  <Typography mb={1} display={'flex'} alignItems={'center'}>
+                     Search for: <Typography fontWeight={'bold'}>{searchKey}</Typography>
+                  </Typography>
+                  
+                  <TablePagination
+                     component="div"
+                     onPageChange={handlePageChange}
+                     page={pageInfoState.page}
+                     count={totalResult}
+                     rowsPerPage={10}
+                     rowsPerPageOptions={[]}
+                  >
+                  </TablePagination>
+               </Box>
+            }
             <Table sx={{ minWidth: 650, maxHeight: 450 }} stickyHeader>
                <TableHead>
                   <TableRow>
@@ -63,7 +66,7 @@ const MovieTable = () => {
                         <TableCell
                            key={column.id}
                            align={column.align}
-                           style={{ minWidth: column.minWidth }}
+                           style={{ minWidth: column.minWidth, fontWeight: 600 }}
                         >
                            {column.label}
                         </TableCell>
