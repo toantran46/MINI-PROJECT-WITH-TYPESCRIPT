@@ -1,29 +1,20 @@
-import { Column } from '../../types/types';
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { removeUser, userInfoSelector } from '../../store/homeSlice';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tooltip, Typography } from '@mui/material';
+import { useHomeSlice } from '../../store/homeSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CreateUserModal from '../CreateUserModal';
+import { userColumn } from '../../common/dummyData';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 
-const columns: Column[] = [
-   { id: 'username', label: 'Username', minWidth: 160, align: "left" },
-   { id: 'email', label: 'Email', minWidth: 160, align: "left" },
-   { id: 'phoneNumber', label: 'Phone number', minWidth: 160, align: "left" },
-   { id: 'address', label: 'Address', minWidth: 160, align: "left" },
-   { id: 'action', label: 'Action', minWidth: 100, align: "center" },
-]
+const columns = userColumn;
 
 const UserTable = () => {
-   
    const [isOpenModal, setIsOpenModal] = useState(false);
    const [userId, setUserId] = useState<string | undefined>('');
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(5);
    
-   const dispatch = useAppDispatch();
-   const userList = useAppSelector(userInfoSelector);
+   const {userInfo: userList, removeHomeUser} = useHomeSlice()
    const handleEditUser = (id: string | undefined) => {
       setIsOpenModal(true);
       setUserId(id);
@@ -42,6 +33,11 @@ const UserTable = () => {
       setRowsPerPage(+parseInt(event.target.value));
       setPage(0);
    };
+
+   const handleRemoveUser = (id: string | undefined) => {
+      removeHomeUser(id);
+      setPage(0);
+   }
    
    return (
       <>
@@ -86,12 +82,16 @@ const UserTable = () => {
                         {user.address}
                      </TableCell>
                      <TableCell align="center">
-                        <Button onClick={() => handleEditUser(user.id)} size="small">
-                            <EditIcon/>
-                        </Button>
-                        <Button color='secondary' onClick={() => dispatch(removeUser(user.id))} size="small">
-                            <DeleteIcon/>
-                        </Button>
+                        <Tooltip title="Edit" placement='top' arrow>
+                           <Button onClick={() => handleEditUser(user.id)}>
+                              <EditIcon/>
+                           </Button>
+                        </Tooltip>
+                        <Tooltip title="Delete" placement='top' arrow>
+                           <Button color='secondary' onClick={() => handleRemoveUser(user.id)}>
+                              <DeleteIcon/>
+                           </Button>
+                        </Tooltip>
                      </TableCell>
                   </TableRow>
                   ))}

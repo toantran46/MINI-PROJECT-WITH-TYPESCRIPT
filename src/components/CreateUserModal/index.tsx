@@ -4,8 +4,7 @@ import './CreateUserModal.css';
 import { Form, useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { addNewUser, userInfoSelector } from '../../store/homeSlice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useHomeSlice } from '../../store/homeSlice';
 import { validationSchema } from '../../yup/schema';
 import { formGroup, formLabel, userModalStyle } from '../styles/styles';
 interface Props {
@@ -19,8 +18,7 @@ const CreateUserModal = (props: Props) => {
 
     const [open, setOpen] = useState(false);
     const [initialData, setInitialData] = useState<UserInfo>()
-    const dispatch = useAppDispatch();
-    const userList = useAppSelector(userInfoSelector);
+     const {userInfo: userList, addNewHomeUser} = useHomeSlice();
     useEffect(() => {
         if (props.userId) {
             setInitialData(userList.find(item => item.id === props.userId))
@@ -33,7 +31,7 @@ const CreateUserModal = (props: Props) => {
             })
         }
         setOpen(props.isOpen);
-    }, [props.isOpen])
+    }, [props.isOpen, props.userId, userList])
     
     const handleClose = () => {
         setOpen(false);
@@ -51,11 +49,11 @@ const CreateUserModal = (props: Props) => {
         defaultValues: {...initialData}
     });
     const onSubmit = (data: UserInfo) => {
-        dispatch(addNewUser(
+        addNewHomeUser(
             {
                 ...data, 
                 id: props.userId ? props.userId : ''
-            }))
+            })
         reset();
         handleClose();
     } 

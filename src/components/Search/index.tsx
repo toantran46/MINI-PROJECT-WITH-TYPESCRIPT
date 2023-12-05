@@ -1,22 +1,21 @@
 import { ChangeEvent } from 'react';
-import { useAppDispatch } from '../../store/store';
-import { onSearchChange } from '../../store/homeSlice';
 import { Box, InputAdornment } from '@mui/material';
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search';
+import { useHomeSlice } from '../../store/homeSlice';
 
 const SearchBox = () => {
    
-   const dispatch = useAppDispatch();
    let timer: number;
-   const debounceTime = 1500;
+   const debounceTime = 1000;
+   const {changeMovieSearch} = useHomeSlice()
    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
       debouncedSearch(event.target.value);
    }
    const debouncedSearch = (searchKey: string) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-         dispatch(onSearchChange(searchKey));
+         changeMovieSearch(searchKey);
       }, debounceTime);
    }
 

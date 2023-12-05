@@ -1,6 +1,7 @@
 export const flexBetweenSpace = {
     display: 'flex', 
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    p: 0
 }
 
 export const userModalStyle = {

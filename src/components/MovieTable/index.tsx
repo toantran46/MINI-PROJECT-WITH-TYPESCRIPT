@@ -39,65 +39,67 @@ const MovieTable = () => {
    }, [data])
    if (error) return 
    return (
-      <TableContainer component={Paper}>
-         {isLoading ? <Typography>Loading...</Typography> :
-         <Box>
-            {searchKey && 
-               <Box p={2} sx={flexBetweenSpace}>
-                  <Typography mb={1} display={'flex'} alignItems={'center'}>
-                     Search for: <Typography fontWeight={'bold'}>{searchKey}</Typography>
-                  </Typography>
-                  
-                  <TablePagination
-                     component="div"
-                     onPageChange={handlePageChange}
-                     page={pageInfoState.page}
-                     count={totalResult}
-                     rowsPerPage={10}
-                     rowsPerPageOptions={[]}
-                  >
-                  </TablePagination>
-               </Box>
-            }
-            <Table sx={{ minWidth: 650, maxHeight: 450 }} stickyHeader>
-               <TableHead>
-                  <TableRow>
-                     {movieColumn.map((column) => (
-                        <TableCell
-                           key={column.id}
-                           align={column.align}
-                           style={{ minWidth: column.minWidth, fontWeight: 600 }}
-                        >
-                           {column.label}
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+         <TableContainer component={Paper} sx={{maxHeight: '100%'}}>
+            <Box>
+               {searchKey && 
+                  <Box p={2} sx={flexBetweenSpace}>
+                     <Typography mb={1} display={'flex'} alignItems={'center'}>
+                        Search for: <Typography fontWeight={'bold'}>{searchKey}</Typography>
+                     </Typography>
+                     
+                     <TablePagination
+                        component="div"
+                        onPageChange={handlePageChange}
+                        page={pageInfoState.page}
+                        count={totalResult}
+                        rowsPerPage={10}
+                        rowsPerPageOptions={[]}
+                     >
+                     </TablePagination>
+                  </Box>
+               }
+               {isLoading ? <Typography>Loading...</Typography> :
+               <Table sx={{ minWidth: 650, maxHeight: 450 }} stickyHeader>
+                  <TableHead>
+                     <TableRow>
+                        {movieColumn.map((column) => (
+                           <TableCell
+                              key={column.id}
+                              align={column.align}
+                              style={{ minWidth: column.minWidth, fontWeight: 600 }}
+                           >
+                              {column.label}
+                           </TableCell>
+                        ))}
+                     </TableRow>
+                  </TableHead>
+                  <TableBody>
+                     { totalResult === 0 ? 
+                     <TableRow>
+                        <TableCell colSpan={5} align="center">
+                           <Typography>No data</Typography>
                         </TableCell>
+                     </TableRow>
+                     :
+                     data?.Search?.map((movie) => (
+                     <TableRow
+                        key={movie.Id}
+                     >
+                        <TableCell align="center">
+                           <img width="100" height="auto" src={movie.Poster} alt="" />
+                        </TableCell>
+                        <TableCell align="left">{movie.Title}</TableCell>
+                        <TableCell align="left">{movie.Type}</TableCell>
+                        <TableCell align="right">{movie.Year}</TableCell>
+                     </TableRow>
                      ))}
-                  </TableRow>
-               </TableHead>
-               <TableBody>
-                  { totalResult === 0 ? 
-                  <TableRow>
-                     <TableCell colSpan={5} align="center">
-                        <Typography>No data</Typography>
-                     </TableCell>
-                  </TableRow>
-                  :
-                  data?.Search?.map((movie) => (
-                  <TableRow
-                     key={movie.Id}
-                  >
-                     <TableCell align="center">
-                        <img width={100} height={100} src={movie.Poster} alt="" />
-                     </TableCell>
-                     <TableCell align="left">{movie.Title}</TableCell>
-                     <TableCell align="left">{movie.Type}</TableCell>
-                     <TableCell align="right">{movie.Year}</TableCell>
-                  </TableRow>
-                  ))}
-               </TableBody>
-            </Table>
-         </Box>
-      }
-      </TableContainer>
+                  </TableBody>
+               </Table>
+               }
+            </Box>         
+         </TableContainer>
+      </Paper>
    )
 }
 

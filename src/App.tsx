@@ -1,12 +1,11 @@
 import './App.css';
 import Paper from '@mui/material/Paper';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useAppSelector } from './store/store';
 import Navbar from './components/Navbar';
 import Movie from './pages/Movie';
 import Home from './pages/Home';
 import { ThemeProvider } from '@emotion/react';
-import { isDarkModeSelector } from './store/homeSlice';
+import { useHomeSlice } from './store/homeSlice';
 import { darkTheme, lightTheme } from './theme/theme';
 import { Container } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -16,7 +15,7 @@ import { ROUTER_PATH } from './constants/Constants';
 const App = () => {
   
   const queryClient = new QueryClient();
-  const prefersDarkMode = useAppSelector(isDarkModeSelector);
+  const { isDarkMode: prefersDarkMode} = useHomeSlice();
   const theme = useMemo(() => {
     return prefersDarkMode ? darkTheme : lightTheme;
   }, [prefersDarkMode])

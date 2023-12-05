@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { green, grey, lime, red } from "@mui/material/colors";
+import { green, lime, red } from "@mui/material/colors";
 
 export const darkTheme = createTheme({
     palette: {
@@ -8,20 +8,9 @@ export const darkTheme = createTheme({
             main: lime[400]
         }, 
         secondary: {
-            main: red[300],
+            main: red[400],
         },
     },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    "&:hover": {
-                        backgroundColor: grey[500]
-                    }
-                }
-            }
-        }
-    }
 })
 
 export const lightTheme = createTheme({
@@ -34,15 +23,4 @@ export const lightTheme = createTheme({
             main: red[300]
         }
     },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    "&:hover": {
-                        backgroundColor: green[200]
-                    }
-                }
-            }
-        }
-    }
 })

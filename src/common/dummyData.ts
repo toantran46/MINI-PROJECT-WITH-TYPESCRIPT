@@ -16,3 +16,11 @@ export const movieColumn: Column[] = [
     { id: 'Year', label: 'Year', minWidth: 100, align: "right" },
 ]
 
+export const userColumn: Column[] = [
+    { id: 'username', label: 'Username', minWidth: 160, align: "left" },
+    { id: 'email', label: 'Email', minWidth: 160, align: "left" },
+    { id: 'phoneNumber', label: 'Phone number', minWidth: 160, align: "left" },
+    { id: 'address', label: 'Address', minWidth: 160, align: "left" },
+    { id: 'action', label: 'Action', minWidth: 100, align: "center" },
+ ]
+
