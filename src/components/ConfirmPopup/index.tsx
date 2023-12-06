@@ -1,56 +1,28 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-interface Props {
-    isOpen: boolean,
-    onClose: () => void,
-    confirmStatus: () => void,
-    username: string
+interface ConfirmProps {
+    open: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+    title: string;
+    content: string;
 }
 
-const ConfirmPopup = (props: Props) => {
-    
-    const [open, setOpen] = useState(false);
-    useEffect(() => {
-        setOpen(props.isOpen)
-    }, [props.isOpen])
-
-
-    const handleClose = () => {
-        setOpen(false);
-        props.onClose();
-    };
-
-    const handleYes = () => {
-        props.confirmStatus();
-    }
+const ConfirmPopup = (props: ConfirmProps) => {
+    const { open, onClose, onConfirm, title, content } = props;
     return (
-        <>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-            >
-                <DialogTitle id="responsive-dialog-title">
-                   <Typography variant="h6" alignItems={"center"}><WarningAmberRoundedIcon/>Warning</Typography> 
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText p={3} display={'flex'}>
-                        Are you sure you want to delete User<Typography fontWeight={'bold'} ml={1} mr={1}>'{props.username}'</Typography>?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" autoFocus onClick={handleYes}>
-                        Yes
-                    </Button>
-                    <Button variant="outlined" color="warning" onClick={handleClose} autoFocus>
-                        No
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+        <Dialog open={open} onClose={onClose} fullWidth>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogContent>{content}</DialogContent>
+            <DialogActions>
+                <Button onClick={onConfirm} color="primary" variant="contained">
+                    Confirm
+                </Button>
+                <Button onClick={onClose} color="primary" variant="outlined">
+                    Cancel
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
-
 }
 export default ConfirmPopup;

@@ -1,4 +1,4 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tooltip, Typography } from '@mui/material';
+import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tooltip, Typography } from '@mui/material';
 import { useHomeSlice } from '../../store/homeSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -6,14 +6,15 @@ import CreateUserModal from '../CreateUserModal';
 import { userColumn } from '../../common/dummyData';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import ConfirmPopup from '../ConfirmPopup';
+import { Link } from 'react-router-dom';
 
 const columns = userColumn;
 
 const UserTable = () => {
    const [isOpenModal, setIsOpenModal] = useState(false);
-   const [isOpenConfirmPopup, setIsOpenConfirmPopup] = useState(false);
+   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
    const [userId, setUserId] = useState<string | undefined>('');
-   const [username, setUsername] = useState('');
+   const [usernameState, setUsernameState] = useState('');
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(5);
    const {userInfo: userList, removeHomeUser} = useHomeSlice();
@@ -21,6 +22,7 @@ const UserTable = () => {
    const handleEditUser = (id: string | undefined) => {
       setIsOpenModal(true);
       setUserId(id);
+      
    }
    const handleCreateUser = () => {
       setIsOpenModal(true);
@@ -38,18 +40,17 @@ const UserTable = () => {
    };
 
    const handleRemoveUser = (id: string | undefined, username: string) => {
-      setIsOpenConfirmPopup(true);
+      setIsConfirmationOpen(true);
       setUserId(id);
-      setUsername(username);
-     
+      setUsernameState(username);
    }
 
-   const handleCloseConfirmPopup = () => {
-      setIsOpenConfirmPopup(false);
+   const handleCloseConfirmation = () => {
+      setIsConfirmationOpen(false);
    }
 
-   const handleConfirmStatus = () => {
-      setIsOpenConfirmPopup(false);
+   const handleConfirmAction = () => {
+      setIsConfirmationOpen(false);
       removeHomeUser(userId);
    }
    
@@ -87,24 +88,24 @@ const UserTable = () => {
                         {user.username}
                      </TableCell>
                      <TableCell align="left">
-                        {user.email}
+                        <Link to={'mailto:+' + user.email}>{user.email}</Link>
                      </TableCell>
                      <TableCell align="left">
-                        {user.phoneNumber}
+                        <Link to={'tel:+' + user.phoneNumber}>{user.phoneNumber}</Link>
                      </TableCell>
                      <TableCell align="left">
                         {user.address}
                      </TableCell>
                      <TableCell align="center">
                         <Tooltip title="Edit" placement='top' arrow>
-                           <Button onClick={() => handleEditUser(user.id)}>
+                           <IconButton onClick={() => handleEditUser(user.id)}>
                               <EditIcon/>
-                           </Button>
+                           </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete" placement='top' arrow>
-                           <Button color='secondary' onClick={() => handleRemoveUser(user.id, user.username)}>
+                           <IconButton color='secondary' onClick={() => handleRemoveUser(user.id, user.username)}>
                               <DeleteIcon/>
-                           </Button>
+                           </IconButton>
                         </Tooltip>
                      </TableCell>
                   </TableRow>
@@ -124,14 +125,15 @@ const UserTable = () => {
          />
          }
          <CreateUserModal
-            isOpen={isOpenModal}
+            open={isOpenModal}
             userId={userId}
             onClose={() => setIsOpenModal(false)}/>
          <ConfirmPopup
-            isOpen={isOpenConfirmPopup}
-            onClose={handleCloseConfirmPopup}
-            confirmStatus={handleConfirmStatus}
-            username={username}
+            open={isConfirmationOpen}
+            onClose={handleCloseConfirmation}
+            onConfirm={handleConfirmAction}
+            title="Confirmation"
+            content={`Are you sure you want to delete '${usernameState}' ?`}
          />
       </>
    )

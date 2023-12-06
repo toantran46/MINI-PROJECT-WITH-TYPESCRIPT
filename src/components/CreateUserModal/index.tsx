@@ -1,5 +1,5 @@
 import { Box, Button, FormGroup, Modal, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './CreateUserModal.css';
 import { Controller, Form, useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
@@ -9,14 +9,14 @@ import { validationSchema } from '../../yup/schema';
 import { formGroup, formLabel, userModalStyle } from '../styles/styles';
 import { STRING } from '../../constants/Constants';
 
-interface Props {
-    isOpen: boolean,
+interface CreateProps {
+    open: boolean,
     onClose: () => void,
     userId?: string
 }
 
-const CreateUserModal = (props: Props) => {
-
+const CreateUserModal = (props: CreateProps) => {
+    const {open, onClose, userId} = props;
     const {
         control,
         reset,
@@ -27,12 +27,10 @@ const CreateUserModal = (props: Props) => {
             ...new UserInfo()
         }
     });
-    const [open, setOpen] = useState(false);
     const {userInfo: userList, addNewHomeUser} = useHomeSlice();
     
     const handleClose = () => {
-        setOpen(false);
-        props.onClose();
+        onClose();
         reset();
     };
 
@@ -40,27 +38,24 @@ const CreateUserModal = (props: Props) => {
         addNewHomeUser(
             {
                 ...data, 
-                id: props.userId ? props.userId : ''
+                id: userId ? userId : ''
             })
         reset(data);
         handleClose();
     }
     useEffect(() => {
-        if (props.userId !== STRING.EMPTY) {
-            const currentUser = userList?.find(item => item.id === props.userId);
+        if (userId !== STRING.EMPTY) {
+            const currentUser = userList?.find(item => item.id === userId);
             reset(currentUser);
         } else {
             reset(new UserInfo());
         }
-        setOpen(props.isOpen);
-    }, [props.isOpen, props.userId, reset, userList])
+    }, [open, userId, reset, userList])
 
     return (
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box sx={userModalStyle}>
                 <Typography 
@@ -69,13 +64,13 @@ const CreateUserModal = (props: Props) => {
                     component="h2"
                     textAlign='center'
                     mb={3}>
-                    {props.userId ? 'Edit User' : 'Create new User'}
+                    {userId ? 'Edit User' : 'Create new User'}
                 </Typography>
                 <Typography component={'span'} mt={2} id="modal-modal-description">
                     <Box>
                         <Form onSubmit={(data) => onSubmit(data.data)} control={control}>
                             <FormGroup sx={formGroup}>
-                                <Typography sx={formLabel}>Username</Typography>
+                                <Typography sx={formLabel}>Username<Typography color={"red"} component={"span"}>*</Typography></Typography>
                                 <Controller
                                     name='username'
                                     control={control}
@@ -88,13 +83,13 @@ const CreateUserModal = (props: Props) => {
                                             fullWidth
                                             error={errors.username ? true : false}
                                             helperText={errors.username?.message}
-                                            disabled={errors.username ? false : true}
+                                            disabled={userId ? true : false}
                                         />
                                     }
                                 />
                             </FormGroup>
                             <FormGroup sx={formGroup}>
-                                <Typography sx={formLabel}>Email</Typography>
+                                <Typography sx={formLabel}>Email<Typography color={"red"} component={"span"}>*</Typography></Typography>
                                 <Controller
                                     name='email'
                                     control={control}
@@ -112,7 +107,7 @@ const CreateUserModal = (props: Props) => {
                                 />
                             </FormGroup>
                             <FormGroup sx={formGroup}>
-                                <Typography sx={formLabel}>Phone number</Typography>
+                                <Typography sx={formLabel}>Phone number<Typography color={"red"} component={"span"}>*</Typography></Typography>
                                 <Controller
                                     name='phoneNumber'
                                     control={control}
@@ -149,9 +144,9 @@ const CreateUserModal = (props: Props) => {
                             </FormGroup>
                             <Box component='div' sx={{float: 'right'}}>
                                 <Button type='submit' variant="contained" sx={{marginRight: 2}}>
-                                    {props.userId ? 'Save' : 'Submit'}
+                                    {userId ? 'Save' : 'Submit'}
                                 </Button>
-                                    {!props.userId && 
+                                    {!userId && 
                                 <Button onClick={() => reset()} variant="contained" sx={{marginRight: 2}}>
                                     Reset
                                 </Button>}

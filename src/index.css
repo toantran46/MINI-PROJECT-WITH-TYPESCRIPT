@@ -29,6 +29,10 @@ h1 {
   padding: 10px;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

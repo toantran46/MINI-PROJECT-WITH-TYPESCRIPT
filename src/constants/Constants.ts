@@ -19,6 +19,9 @@ export const VALIDATION_MESSAGE = {
     INVALID: {
         EMAIL: "Email is invalid",
         PHONE_NUMBER: "Phone number is invalid, must be 10 number"
+    },
+    MATCHES: {
+        USERNAME: "Spaces are not allowed in the username"
     }
 }
 
@@ -35,5 +38,6 @@ export const THEME_MODE = {
 }
 
 export const STRING = {
-    EMPTY: ''
+    EMPTY: '',
+    SPACE_REGULAR_EXPRESSION: /^\S*$/
 }
