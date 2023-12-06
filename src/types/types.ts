@@ -1,5 +1,5 @@
 export interface Movie {
-    Id: string,
+    Id: '';
     Title?: string,
     Poster?: string,
     Year?: string,
@@ -20,10 +20,10 @@ export interface Column {
     format?: (value: number) => string;
 }
 
-export interface UserInfo {
-    id?: string
-    username: string,
-    email: string,
-    phoneNumber: string
-    address?: string,
+export class UserInfo {
+    id?: string = undefined;
+    username = '';
+    email = '';
+    phoneNumber = '';
+    address?: string = undefined;
 }

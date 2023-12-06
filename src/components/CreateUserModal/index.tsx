@@ -1,37 +1,34 @@
 import { Box, Button, FormGroup, Modal, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import './CreateUserModal.css';
-import { Form, useForm } from 'react-hook-form';
+import { Controller, Form, useForm } from 'react-hook-form';
 import { UserInfo } from '../../types/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useHomeSlice } from '../../store/homeSlice';
 import { validationSchema } from '../../yup/schema';
 import { formGroup, formLabel, userModalStyle } from '../styles/styles';
+import { STRING } from '../../constants/Constants';
+
 interface Props {
     isOpen: boolean,
     onClose: () => void,
-    userId?: string,
-    children: React.ReactNode
+    userId?: string
 }
 
 const CreateUserModal = (props: Props) => {
 
-    const [open, setOpen] = useState(false);
-    const [initialData, setInitialData] = useState<UserInfo>()
-     const {userInfo: userList, addNewHomeUser} = useHomeSlice();
-    useEffect(() => {
-        if (props.userId) {
-            setInitialData(userList.find(item => item.id === props.userId))
-        } else {
-            setInitialData({
-                username: '',
-                email: '',
-                phoneNumber: '',
-                address: ''
-            })
+    const {
+        control,
+        reset,
+        formState: {errors}
+    } = useForm<UserInfo>({
+        resolver: yupResolver(validationSchema),
+        defaultValues: {
+            ...new UserInfo()
         }
-        setOpen(props.isOpen);
-    }, [props.isOpen, props.userId, userList])
+    });
+    const [open, setOpen] = useState(false);
+    const {userInfo: userList, addNewHomeUser} = useHomeSlice();
     
     const handleClose = () => {
         setOpen(false);
@@ -39,24 +36,24 @@ const CreateUserModal = (props: Props) => {
         reset();
     };
 
-    const {
-        register,
-        control,
-        reset,
-        formState: {errors}
-    } = useForm<UserInfo>({
-        resolver: yupResolver(validationSchema),
-        defaultValues: {...initialData}
-    });
     const onSubmit = (data: UserInfo) => {
         addNewHomeUser(
             {
                 ...data, 
                 id: props.userId ? props.userId : ''
             })
-        reset();
+        reset(data);
         handleClose();
-    } 
+    }
+    useEffect(() => {
+        if (props.userId !== STRING.EMPTY) {
+            const currentUser = userList?.find(item => item.id === props.userId);
+            reset(currentUser);
+        } else {
+            reset(new UserInfo());
+        }
+        setOpen(props.isOpen);
+    }, [props.isOpen, props.userId, reset, userList])
 
     return (
         <Modal
@@ -79,53 +76,75 @@ const CreateUserModal = (props: Props) => {
                         <Form onSubmit={(data) => onSubmit(data.data)} control={control}>
                             <FormGroup sx={formGroup}>
                                 <Typography sx={formLabel}>Username</Typography>
-                                <TextField 
-                                    id="username"
-                                    variant="outlined"
-                                    placeholder='Username...'
-                                    {...register('username')}
-                                    fullWidth
-                                    error={errors.username ? true : false}
-                                    helperText={errors.username?.message}
-                                    defaultValue={initialData?.username}
+                                <Controller
+                                    name='username'
+                                    control={control}
+                                    render={({field}) =>
+                                        <TextField 
+                                            {...field}
+                                            id="username"
+                                            variant="outlined"
+                                            placeholder='Username...'
+                                            fullWidth
+                                            error={errors.username ? true : false}
+                                            helperText={errors.username?.message}
+                                            disabled={errors.username ? false : true}
+                                        />
+                                    }
                                 />
                             </FormGroup>
                             <FormGroup sx={formGroup}>
                                 <Typography sx={formLabel}>Email</Typography>
-                                <TextField 
-                                    id="email"
-                                    variant="outlined"
-                                    placeholder='Email...'
-                                    {...register('email')}
-                                    fullWidth
-                                    error={errors.email ? true : false}
-                                    helperText={errors.email?.message}
-                                    defaultValue={initialData?.email}
+                                <Controller
+                                    name='email'
+                                    control={control}
+                                    render={({field}) =>
+                                        <TextField 
+                                            {...field}  
+                                            id="email"
+                                            variant="outlined"
+                                            placeholder='Email...'
+                                            fullWidth
+                                            error={errors.email ? true : false}
+                                            helperText={errors.email?.message}
+                                        />
+                                    }
                                 />
                             </FormGroup>
                             <FormGroup sx={formGroup}>
                                 <Typography sx={formLabel}>Phone number</Typography>
-                                <TextField
-                                    id="phoneNumber"
-                                    variant="outlined"
-                                    type='number'
-                                    placeholder='Phone...'
-                                    {...register('phoneNumber')}
-                                    fullWidth
-                                    error={errors.phoneNumber ? true : false}
-                                    helperText={errors.phoneNumber?.message}
-                                    defaultValue={initialData?.phoneNumber}
+                                <Controller
+                                    name='phoneNumber'
+                                    control={control}
+                                    render={({field}) =>
+                                        <TextField
+                                            {...field}
+                                            id="phoneNumber"
+                                            variant="outlined"
+                                            type='number'
+                                            placeholder='Phone...'
+                                            fullWidth
+                                            error={errors.phoneNumber ? true : false}
+                                            helperText={errors.phoneNumber?.message}
+                                        />
+                                    }
                                 />
+                                
                             </FormGroup>
                             <FormGroup sx={formGroup}>
                                 <Typography sx={formLabel}>Address</Typography>
-                                <TextField 
-                                    id="address"
-                                    variant="outlined"
-                                    placeholder='Address...'
-                                    fullWidth
-                                    {...register('address')}
-                                    defaultValue={initialData?.address}
+                                <Controller
+                                    name='address'
+                                    control={control}
+                                    render={({field}) =>
+                                        <TextField 
+                                            {...field}
+                                            id="address"
+                                            variant="outlined"
+                                            placeholder='Address...'
+                                            fullWidth
+                                        />
+                                    }
                                 />
                             </FormGroup>
                             <Box component='div' sx={{float: 'right'}}>
@@ -133,7 +152,7 @@ const CreateUserModal = (props: Props) => {
                                     {props.userId ? 'Save' : 'Submit'}
                                 </Button>
                                     {!props.userId && 
-                                <Button onClick={() => reset()} variant="contained" color='warning' sx={{marginRight: 2}}>
+                                <Button onClick={() => reset()} variant="contained" sx={{marginRight: 2}}>
                                     Reset
                                 </Button>}
                                 <Button onClick={handleClose} variant="outlined">
@@ -149,3 +168,4 @@ const CreateUserModal = (props: Props) => {
 }
 
 export default CreateUserModal;
+

@@ -5,16 +5,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import CreateUserModal from '../CreateUserModal';
 import { userColumn } from '../../common/dummyData';
 import { ChangeEvent, MouseEvent, useState } from 'react';
+import ConfirmPopup from '../ConfirmPopup';
 
 const columns = userColumn;
 
 const UserTable = () => {
    const [isOpenModal, setIsOpenModal] = useState(false);
+   const [isOpenConfirmPopup, setIsOpenConfirmPopup] = useState(false);
    const [userId, setUserId] = useState<string | undefined>('');
+   const [username, setUsername] = useState('');
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(5);
+   const {userInfo: userList, removeHomeUser} = useHomeSlice();
    
-   const {userInfo: userList, removeHomeUser} = useHomeSlice()
    const handleEditUser = (id: string | undefined) => {
       setIsOpenModal(true);
       setUserId(id);
@@ -34,9 +37,20 @@ const UserTable = () => {
       setPage(0);
    };
 
-   const handleRemoveUser = (id: string | undefined) => {
-      removeHomeUser(id);
-      setPage(0);
+   const handleRemoveUser = (id: string | undefined, username: string) => {
+      setIsOpenConfirmPopup(true);
+      setUserId(id);
+      setUsername(username);
+     
+   }
+
+   const handleCloseConfirmPopup = () => {
+      setIsOpenConfirmPopup(false);
+   }
+
+   const handleConfirmStatus = () => {
+      setIsOpenConfirmPopup(false);
+      removeHomeUser(userId);
    }
    
    return (
@@ -88,7 +102,7 @@ const UserTable = () => {
                            </Button>
                         </Tooltip>
                         <Tooltip title="Delete" placement='top' arrow>
-                           <Button color='secondary' onClick={() => handleRemoveUser(user.id)}>
+                           <Button color='secondary' onClick={() => handleRemoveUser(user.id, user.username)}>
                               <DeleteIcon/>
                            </Button>
                         </Tooltip>
@@ -112,8 +126,13 @@ const UserTable = () => {
          <CreateUserModal
             isOpen={isOpenModal}
             userId={userId}
-            onClose={() => setIsOpenModal(false)}>
-         </CreateUserModal>
+            onClose={() => setIsOpenModal(false)}/>
+         <ConfirmPopup
+            isOpen={isOpenConfirmPopup}
+            onClose={handleCloseConfirmPopup}
+            confirmStatus={handleConfirmStatus}
+            username={username}
+         />
       </>
    )
 }
