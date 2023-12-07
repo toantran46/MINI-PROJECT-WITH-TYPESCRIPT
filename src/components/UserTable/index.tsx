@@ -7,6 +7,8 @@ import { userColumn } from '../../common/dummyData';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import ConfirmPopup from '../ConfirmPopup';
 import { Link } from 'react-router-dom';
+import Toast from '../Toast';
+import { TOAST_MESSAGE } from '../../constants/Constants';
 
 const columns = userColumn;
 
@@ -17,6 +19,7 @@ const UserTable = () => {
    const [usernameState, setUsernameState] = useState('');
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(5);
+   const [openToast, setOpenToast] = useState(false);
    const {userInfo: userList, removeHomeUser} = useHomeSlice();
    
    const handleEditUser = (id: string | undefined) => {
@@ -52,13 +55,14 @@ const UserTable = () => {
    const handleConfirmAction = () => {
       setIsConfirmationOpen(false);
       removeHomeUser(userId);
+      setOpenToast(true);
    }
    
    return (
       <>
          <Button variant="contained" sx={{marginBottom: 3, float: 'right'}} onClick={handleCreateUser}>Create new user</Button>
-         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="user list table">
+         <TableContainer component={Paper} sx={{maxHeight:'73vh'}}>
+            <Table sx={{ minWidth: 650 }} stickyHeader>
                <TableHead>
                   <TableRow>
                      {columns.map((column) => (
@@ -134,6 +138,14 @@ const UserTable = () => {
             onConfirm={handleConfirmAction}
             title="Confirmation"
             content={`Are you sure you want to delete '${usernameState}' ?`}
+         />
+         <Toast
+            open={openToast}
+            message={TOAST_MESSAGE.SUCCESS.DELETE}
+            onClose={() => setOpenToast(false)}
+            status='success'
+            vertical='top'
+            horizontal='center'
          />
       </>
    )

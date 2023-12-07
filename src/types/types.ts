@@ -9,7 +9,8 @@ export interface Movie {
 export interface ApiResponse {
     Response?: string,
     Search: Movie[],
-    totalResults?: number
+    totalResults?: number,
+    Error?: string 
 }
 
 export interface Column {
@@ -27,3 +28,9 @@ export class UserInfo {
     phoneNumber = '';
     address?: string = undefined;
 }
+
+export type Status = "success" | "error" | "warning" | "info";
+
+export type Vertical = "top" | "bottom";
+
+export type Horizontal = "center" | "left" | "right";

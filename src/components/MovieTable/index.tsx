@@ -1,4 +1,4 @@
-import { Box, Paper, TablePagination, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Paper, TablePagination, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,20 +13,19 @@ import { useHomeSlice } from '../../store/homeSlice';
 import { STRING } from '../../constants/Constants';
 import NoImage from '../../assets/image-not-found.jpg';
 import { Link } from 'react-router-dom';
+import Toast from '../Toast';
+
+const initialPageInfo = {
+   page: 0,
+   rowsPerPage: 10
+}
 
 const MovieTable = () => {
    
    const [totalResult, setTotalResult] = useState(0);
-   const [pageInfoState, setPageInfoState] = useState({
-      page: 0,
-      rowsPerPage: 10
-   })
-   const {searchInput: searchKey} = useHomeSlice();
-   
-   const { isLoading, data, error } = useQuery({
-      queryKey: [searchKey, pageInfoState],
-      queryFn: () => MovieService(searchKey, (pageInfoState.page + 1))
-   })
+   const [pageInfoState, setPageInfoState] = useState(initialPageInfo);
+   const [ openToast, setOpenToast] = useState(false);
+   const {searchInput: searchKey, isDarkMode} = useHomeSlice();
 
    const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
       event?.preventDefault();
@@ -35,18 +34,34 @@ const MovieTable = () => {
          page: newPage
       });
    };
+
+   const { isLoading, data, isError, error } = useQuery({
+      queryKey: [searchKey, pageInfoState],
+      queryFn: () => MovieService(searchKey, (pageInfoState.page + 1))
+   })
+
    useEffect(() => {
       if (data?.totalResults) {
-         setTotalResult(data.totalResults);
-      } else {
+         setTotalResult(Math.floor(data.totalResults));
+      } else if (data?.Error) {
          setTotalResult(0);
       }
    }, [data])
-   if (error) return <Typography>Please try again</Typography>
+
+   useEffect(() => {
+      setPageInfoState({
+         ...pageInfoState,
+         page: 0
+      });
+   },[searchKey]);
+
+   useEffect(() => {
+      setOpenToast(isError);
+   },[isError])
    
    return (
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-         {(searchKey && totalResult !== 0) && 
+      <Paper sx={{ width: '100%', overflow: 'hidden', colorScheme: isDarkMode ? 'dark' : 'light' }}>
+         {(totalResult !== 0) && 
             <Box textAlign={'right'}>                     
                <TablePagination
                   component="div"
@@ -60,8 +75,7 @@ const MovieTable = () => {
          }
          <TableContainer component={Paper} sx={{maxHeight: '73vh'}}>
             <Box>
-               {isLoading ? <Typography p={2}>Loading...</Typography> :
-               <Table stickyHeader>
+               <Table stickyHeader id="movieTable">
                   <TableHead>
                      <TableRow>
                         {movieColumn.map((column) => (
@@ -75,35 +89,49 @@ const MovieTable = () => {
                         ))}
                      </TableRow>
                   </TableHead>
-                  <TableBody>
-                     { totalResult === 0 ? 
-                     <TableRow>
-                        <TableCell colSpan={5} align="center">
-                           <Typography>No data</Typography>
-                        </TableCell>
-                     </TableRow>
-                     :
-                     data?.Search?.map((movie) => (
-                     <TableRow
-                        key={movie.Id}
-                     >
-                        <TableCell align="center">
-                           {movie.Poster === STRING.NONE ? 
-                              <img width="100" height="auto" src={NoImage}/>
-                           : <Link to={movie.Poster} target='_blank'>
-                                 <img width="100" height="auto" src={movie.Poster} alt={movie.Id} />
-                              </Link>}
-                        </TableCell>
-                        <TableCell align="left">{movie.Title}</TableCell>
-                        <TableCell align="left">{movie.Type}</TableCell>
-                        <TableCell align="right">{movie.Year}</TableCell>
-                     </TableRow>
-                     ))}
+                  <TableBody id="movie-body">
+                     {isLoading ? 
+                        <TableRow id="progress-row">
+                           <TableCell colSpan={5} align="center">
+                              <CircularProgress/>
+                           </TableCell>
+                        </TableRow>   
+                     : (totalResult === 0) ? 
+                        <TableRow id="no-data-row">
+                           <TableCell colSpan={5} align="center">
+                              <Typography>No data</Typography>
+                           </TableCell>
+                        </TableRow>
+                     : data?.Search?.map((movie) => (
+                        <TableRow
+                           key={movie.Id}
+                        >
+                           <TableCell align="center">
+                              {movie.Poster === STRING.NONE 
+                              ? <img width="100" height="auto" src={NoImage}/>
+                              :  <Link to={movie.Poster} target='_blank'>
+                                    <img width="100" height="auto" src={movie.Poster} alt={movie.Title} />
+                                 </Link>
+                              }
+                           </TableCell>
+                           <TableCell align="left">{movie.Title}</TableCell>
+                           <TableCell align="left">{movie.Type}</TableCell>
+                           <TableCell sx={{alignItems: 'center'}} align="right"><Chip label={movie.Year} size="small" /></TableCell>
+                        </TableRow>
+                        ))
+                     }
                   </TableBody>
                </Table>
-               }
             </Box>         
          </TableContainer>
+         <Toast
+            open={openToast}
+            message={error ? error.message : "An error occurred!"}
+            onClose={() => setOpenToast(false)}
+            status='error'
+            vertical='top'
+            horizontal='center'
+         />
       </Paper>
    )
 }

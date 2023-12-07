@@ -40,5 +40,18 @@ export const THEME_MODE = {
 export const STRING = {
     EMPTY: '',
     SPACE_REGULAR_EXPRESSION: /^\S*$/,
-    NONE: 'N/A'
+    NONE: 'N/A',
+    FALSE: 'False'
+}
+
+export const TOAST_MESSAGE = {
+    SUCCESS: {
+        CREATE: 'Create successfully!',
+        UPDATE: 'Update successfully!',
+        DELETE: 'Delete successfully'
+    },
+    ERROR: {
+        USERNAME_EXIST: 'Username is already exist, please try another one!'
+    }
+    
 }
