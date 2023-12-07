@@ -12,6 +12,7 @@ export const userModalStyle = {
     width: 600,
     bgcolor: 'background.default',
     color: 'text.primary',
+    borderRadius: '4px',
     boxShadow: 24,
     pt: 2,
     px: 4,

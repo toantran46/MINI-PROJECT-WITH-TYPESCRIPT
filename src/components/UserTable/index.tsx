@@ -18,7 +18,7 @@ const UserTable = () => {
    const [userId, setUserId] = useState<string | undefined>('');
    const [usernameState, setUsernameState] = useState('');
    const [page, setPage] = useState(0);
-   const [rowsPerPage, setRowsPerPage] = useState(5);
+   const [rowsPerPage, setRowsPerPage] = useState(10);
    const [openToast, setOpenToast] = useState(false);
    const {userInfo: userList, removeHomeUser} = useHomeSlice();
    

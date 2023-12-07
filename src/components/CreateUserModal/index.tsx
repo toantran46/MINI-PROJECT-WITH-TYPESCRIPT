@@ -166,7 +166,7 @@ const CreateUserModal = (props: CreateModalProps) => {
                                         {userId ? 'Save' : 'Submit'}
                                     </Button>
                                         {!userId && 
-                                    <Button onClick={() => reset()} variant="contained" sx={{marginRight: 2}}>
+                                    <Button onClick={() => reset(new UserInfo())} variant="contained" sx={{marginRight: 2}}>
                                         Reset
                                     </Button>}
                                     <Button onClick={handleClose} variant="outlined">

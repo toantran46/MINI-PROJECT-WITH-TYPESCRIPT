@@ -1,4 +1,4 @@
-import { Box, Chip, CircularProgress, Paper, TablePagination, Typography } from '@mui/material';
+import { Box, CircularProgress, Paper, TablePagination, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -75,7 +75,7 @@ const MovieTable = () => {
          }
          <TableContainer component={Paper} sx={{maxHeight: '73vh'}}>
             <Box>
-               <Table stickyHeader id="movieTable">
+               <Table stickyHeader key="movieTable">
                   <TableHead>
                      <TableRow>
                         {movieColumn.map((column) => (
@@ -89,15 +89,15 @@ const MovieTable = () => {
                         ))}
                      </TableRow>
                   </TableHead>
-                  <TableBody id="movie-body">
+                  <TableBody key="movie-body">
                      {isLoading ? 
-                        <TableRow id="progress-row">
+                        <TableRow key="progress-row">
                            <TableCell colSpan={5} align="center">
                               <CircularProgress/>
                            </TableCell>
                         </TableRow>   
                      : (totalResult === 0) ? 
-                        <TableRow id="no-data-row">
+                        <TableRow key="no-data-row">
                            <TableCell colSpan={5} align="center">
                               <Typography>No data</Typography>
                            </TableCell>
@@ -116,7 +116,7 @@ const MovieTable = () => {
                            </TableCell>
                            <TableCell align="left">{movie.Title}</TableCell>
                            <TableCell align="left">{movie.Type}</TableCell>
-                           <TableCell sx={{alignItems: 'center'}} align="right"><Chip label={movie.Year} size="small" /></TableCell>
+                           <TableCell sx={{alignItems: 'center'}} align="right">{movie.Year}</TableCell>
                         </TableRow>
                         ))
                      }
