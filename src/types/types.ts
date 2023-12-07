@@ -13,6 +13,18 @@ export interface ApiResponse {
     Error?: string 
 }
 
+export interface MovieDetailResponse {
+    Title: string,
+    Year: string,
+    Rated: string,
+    Released: string,
+    BoxOffice: string,
+    Writer: string,
+    Country: string,
+    Language: string,
+    Plot: string,
+}
+
 export interface Column {
     id: string;
     label: string;
@@ -27,6 +39,12 @@ export class UserInfo {
     email = '';
     phoneNumber = '';
     address?: string = undefined;
+}
+
+export interface Row {
+    id: string,
+    label: string,
+    value: string
 }
 
 export type Status = "success" | "error" | "warning" | "info";

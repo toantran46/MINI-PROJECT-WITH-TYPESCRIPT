@@ -1,10 +1,10 @@
 export const ROUTER_PATH = {
     HOME: '/',
-    MOVIE: '/movie'
+    MOVIE: '/movies'
 }
 export const ROUTER_NAME = {
     HOME: 'Home',
-    MOVIE: 'Movie'
+    MOVIE: 'Movies'
 }
 
 export const VALIDATION_MESSAGE = {

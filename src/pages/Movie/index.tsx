@@ -10,7 +10,7 @@ const Movie = () => {
             variant="h5" 
             component="div" 
             align='center'>
-            Movie
+            Movies
          </Typography>
          <SearchBox/>
          <MovieTable/>

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Paper, TablePagination, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Paper, TablePagination, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,8 +12,8 @@ import { movieColumn } from '../../common/dummyData';
 import { useHomeSlice } from '../../store/homeSlice';
 import { STRING } from '../../constants/Constants';
 import NoImage from '../../assets/image-not-found.jpg';
-import { Link } from 'react-router-dom';
 import Toast from '../Toast';
+import MovieDetailModal from '../MovieDetailModal';
 
 const initialPageInfo = {
    page: 0,
@@ -24,7 +24,9 @@ const MovieTable = () => {
    
    const [totalResult, setTotalResult] = useState(0);
    const [pageInfoState, setPageInfoState] = useState(initialPageInfo);
-   const [ openToast, setOpenToast] = useState(false);
+   const [openToast, setOpenToast] = useState(false);
+   const [openDetail, setOpenDetail] = useState(false);
+   const [titleMovie, setTitleMovie] = useState('');
    const {searchInput: searchKey, isDarkMode} = useHomeSlice();
 
    const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -39,6 +41,13 @@ const MovieTable = () => {
       queryKey: [searchKey, pageInfoState],
       queryFn: () => MovieService(searchKey, (pageInfoState.page + 1))
    })
+
+   const onShowDetailMovie = (title: string | undefined) => {
+      if (title) {
+         setTitleMovie(title);
+         setOpenDetail(true);
+      }
+   }
 
    useEffect(() => {
       if (data?.totalResults) {
@@ -107,12 +116,13 @@ const MovieTable = () => {
                            key={movie.Id}
                         >
                            <TableCell align="center">
-                              {movie.Poster === STRING.NONE 
-                              ? <img width="100" height="auto" src={NoImage}/>
-                              :  <Link to={movie.Poster} target='_blank'>
-                                    <img width="100" height="auto" src={movie.Poster} alt={movie.Title} />
-                                 </Link>
-                              }
+                              <Tooltip title="View detail" placement='right' arrow>
+                                 <Button onClick={() => onShowDetailMovie(movie.Title)}>
+                                    <img width="100" height="auto" 
+                                       src={(movie.Poster === STRING.NONE ) ? NoImage : movie.Poster} 
+                                       alt={movie.Title}/>
+                                 </Button>
+                              </Tooltip>
                            </TableCell>
                            <TableCell align="left">{movie.Title}</TableCell>
                            <TableCell align="left">{movie.Type}</TableCell>
@@ -132,6 +142,14 @@ const MovieTable = () => {
             vertical='top'
             horizontal='center'
          />
+         {openDetail && 
+            <MovieDetailModal
+               open={openDetail}
+               onClose={() => setOpenDetail(false)}
+               title={titleMovie}
+            />
+         }
+         
       </Paper>
    )
 }

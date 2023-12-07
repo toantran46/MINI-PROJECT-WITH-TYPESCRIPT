@@ -1,4 +1,4 @@
-import { Column, UserInfo } from "../types/types";
+import { Column, Row, UserInfo } from "../types/types";
 import { GenerateUUid } from "./common";
 
 export const userInfoDummy: UserInfo[] = [
@@ -22,5 +22,15 @@ export const userColumn: Column[] = [
     { id: 'phoneNumber', label: 'Phone number', minWidth: 160, align: "left" },
     { id: 'address', label: 'Address', minWidth: 160, align: "left" },
     { id: 'action', label: 'Action', minWidth: 100, align: "center" },
- ]
+]
 
+export const movieDetailRow: Row[] = [
+    { id: 'title', label: 'Title', value: '' },
+    { id: 'tear', label: 'Year', value: '' },
+    { id: 'rated', label: 'Rated', value: '' },
+    { id: 'released', label: 'Released', value: '' },
+    { id: 'writer', label: 'Writer', value: '' },
+    { id: 'actors', label: 'Actors', value: '' },
+    { id: 'country', label: 'Country', value: '' },
+    { id: 'plot', label: 'Plot', value: '' },
+]

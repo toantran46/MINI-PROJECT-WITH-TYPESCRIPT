@@ -27,3 +27,8 @@ export const formGroup = {
 export const formLabel = {
     mb: 1
 }
+
+export const dialogActionStyle = {
+    marginBottom: 1, 
+    marginRight: 1
+}

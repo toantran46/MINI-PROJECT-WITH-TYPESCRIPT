@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { dialogActionStyle } from "../styles/styles";
 
 interface ConfirmProps {
     open: boolean;
@@ -14,7 +15,7 @@ const ConfirmPopup = (props: ConfirmProps) => {
         <Dialog open={open} onClose={onClose} fullWidth>
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>{content}</DialogContent>
-            <DialogActions>
+            <DialogActions sx={dialogActionStyle}>
                 <Button onClick={onConfirm} color="primary" variant="contained">
                     Confirm
                 </Button>

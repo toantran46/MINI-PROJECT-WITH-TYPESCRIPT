@@ -13,3 +13,7 @@ export const navLinks = [
     { title: ROUTER_NAME.MOVIE, path: ROUTER_PATH.MOVIE },
 ];
 
+export const checkOwnProperty = (object: object, field: string) => {
+    return Object.prototype.hasOwnProperty.call(object, field)
+}
+
