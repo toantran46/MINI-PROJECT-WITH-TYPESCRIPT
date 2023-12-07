@@ -19,7 +19,16 @@ const LightBox = () => {
         return (
             <Box display={'flex'}>
                 <Tooltip title={theme.palette.mode === THEME_MODE.DARK ? 'Light Mode' : 'Dark Mode'} placement='bottom' arrow>
-                    <Button onClick={handleChangeMode} color="inherit">
+                    <Button 
+                        sx={{
+                            '&:hover': {
+                                backgroundColor: theme.palette.mode === THEME_MODE.DARK 
+                                    ? 'rgba(255, 255, 255, 0.08)' 
+                                    : 'rgba(0, 0, 0, 0.1)'
+                              }
+                        }}
+                        onClick={handleChangeMode} 
+                        color="inherit">
                         {theme.palette.mode === THEME_MODE.DARK ? <Brightness7Icon /> : <Brightness4Icon />}
                     </Button>
                 </Tooltip>

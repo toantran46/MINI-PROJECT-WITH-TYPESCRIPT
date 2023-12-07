@@ -13,7 +13,6 @@ const Navbar = () => {
         <Container sx={flexBetweenSpace} maxWidth="lg">
           <List
             component="nav"
-            aria-labelledby="main navigation"
             sx={flexBetweenSpace}
           >
             {navLinks.map(({ title, path }) => (
@@ -22,6 +21,7 @@ const Navbar = () => {
                   '&:hover': {
                     borderRadius: 1,
                     color: isDarkMode ? 'white' : 'dark',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.1)'
                   },
                     borderRadius: 1,
                     backgroundColor: 'transparent'

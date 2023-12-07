@@ -5,13 +5,13 @@ const Home = () => {
    
    return (
       <>
-      <Typography 
-         variant="h5" 
-         component="div" 
-         align='center'>
-         Home
-      </Typography>
-      <UserTable/>
+         <Typography 
+            variant="h5" 
+            component="div" 
+            align='center'>
+            Home
+         </Typography>
+         <UserTable/>
       </>
    )
 }

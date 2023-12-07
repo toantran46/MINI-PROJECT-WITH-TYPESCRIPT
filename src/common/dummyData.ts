@@ -11,7 +11,7 @@ export const userInfoDummy: UserInfo[] = [
 
 export const movieColumn: Column[] = [
     { id: 'Poster', label: 'Poster', minWidth: 160, align: "center" },
-    { id: 'Title', label: 'Title', minWidth: 160, align: "left" },
+    { id: 'Title', label: 'Name', minWidth: 160, align: "left" },
     { id: 'Type', label: 'Type', minWidth: 100, align: "left" },
     { id: 'Year', label: 'Year', minWidth: 100, align: "right" },
 ]

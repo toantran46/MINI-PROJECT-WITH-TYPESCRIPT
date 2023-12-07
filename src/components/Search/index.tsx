@@ -1,25 +1,31 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Box, IconButton, InputAdornment } from '@mui/material';
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useHomeSlice } from '../../store/homeSlice';
 
-let timer: number;
-const debounceTime = 1000;
+let timeoutId: number;
+const delay = 1000;
 
 const SearchBox = () => {
    
-   const {changeMovieSearch, searchInput} = useHomeSlice()
+   const {changeMovieSearch, searchInput} = useHomeSlice();
+   const [searchTerm, setSearchTerm] = useState(searchInput)
    
    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
       debouncedSearch(event.target.value);
    }
    const debouncedSearch = (searchKey: string) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
+      clearTimeout(timeoutId);     
+      timeoutId = setTimeout(() => {
          changeMovieSearch(searchKey);
-      }, debounceTime);
+      }, delay);
+   }
+
+   const onResetSearch = () => {
+      setSearchTerm('');
+      changeMovieSearch('');
    }
 
    return (
@@ -28,7 +34,7 @@ const SearchBox = () => {
             size='small' 
             onChange={handleSearchChange}
             placeholder="Search here..."
-            defaultValue={searchInput}
+            defaultValue={searchTerm}
             InputProps={{
                startAdornment: (
                   <InputAdornment position="start">
@@ -37,7 +43,9 @@ const SearchBox = () => {
                ),
                endAdornment: (
                   <InputAdornment position="end">
-                     <IconButton onClick={() =>changeMovieSearch('')}><CloseIcon/></IconButton>
+                     <IconButton onClick={onResetSearch}>
+                        <CloseIcon/>
+                     </IconButton>
                   </InputAdornment>
                )
             }}

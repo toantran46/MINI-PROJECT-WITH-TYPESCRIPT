@@ -10,6 +10,9 @@ import { useEffect, useState } from 'react';
 import { MovieService } from '../../services/Services';
 import { movieColumn } from '../../common/dummyData';
 import { useHomeSlice } from '../../store/homeSlice';
+import { STRING } from '../../constants/Constants';
+import NoImage from '../../assets/image-not-found.jpg';
+import { Link } from 'react-router-dom';
 
 const MovieTable = () => {
    
@@ -18,7 +21,7 @@ const MovieTable = () => {
       page: 0,
       rowsPerPage: 10
    })
-   const {searchInput: searchKey} = useHomeSlice()
+   const {searchInput: searchKey} = useHomeSlice();
    
    const { isLoading, data, error } = useQuery({
       queryKey: [searchKey, pageInfoState],
@@ -34,29 +37,31 @@ const MovieTable = () => {
    };
    useEffect(() => {
       if (data?.totalResults) {
-         setTotalResult(data.totalResults)
+         setTotalResult(data.totalResults);
+      } else {
+         setTotalResult(0);
       }
    }, [data])
    if (error) return <Typography>Please try again</Typography>
    
    return (
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-         <TableContainer component={Paper} sx={{maxHeight: '100%'}}>
+         {(searchKey && totalResult !== 0) && 
+            <Box textAlign={'right'}>                     
+               <TablePagination
+                  component="div"
+                  onPageChange={handlePageChange}
+                  page={pageInfoState.page}
+                  count={totalResult}
+                  rowsPerPage={10}
+                  rowsPerPageOptions={[]}
+               />
+            </Box>
+         }
+         <TableContainer component={Paper} sx={{maxHeight: '73vh'}}>
             <Box>
-               {searchKey && 
-                  <Box textAlign={'right'}>                     
-                     <TablePagination
-                        component="div"
-                        onPageChange={handlePageChange}
-                        page={pageInfoState.page}
-                        count={totalResult}
-                        rowsPerPage={10}
-                        rowsPerPageOptions={[]}
-                     />
-                  </Box>
-               }
                {isLoading ? <Typography p={2}>Loading...</Typography> :
-               <Table sx={{ minWidth: 650, maxHeight: 450 }} stickyHeader>
+               <Table stickyHeader>
                   <TableHead>
                      <TableRow>
                         {movieColumn.map((column) => (
@@ -83,7 +88,11 @@ const MovieTable = () => {
                         key={movie.Id}
                      >
                         <TableCell align="center">
-                           <img width="100" height="auto" src={movie.Poster} alt={movie.Id} />
+                           {movie.Poster === STRING.NONE ? 
+                              <img width="100" height="auto" src={NoImage}/>
+                           : <Link to={movie.Poster} target='_blank'>
+                                 <img width="100" height="auto" src={movie.Poster} alt={movie.Id} />
+                              </Link>}
                         </TableCell>
                         <TableCell align="left">{movie.Title}</TableCell>
                         <TableCell align="left">{movie.Type}</TableCell>
@@ -99,4 +108,4 @@ const MovieTable = () => {
    )
 }
 
-export default MovieTable
+export default MovieTable;

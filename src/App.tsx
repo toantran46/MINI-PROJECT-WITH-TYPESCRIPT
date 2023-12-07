@@ -24,7 +24,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
           <BrowserRouter>
-              <Paper sx={{height: "100vh"}} elevation={3}>
+              <Paper sx={{minHeight: "100vh"}} elevation={3}>
                 <Navbar/>
                 <Container maxWidth="lg">
                   <Routes>

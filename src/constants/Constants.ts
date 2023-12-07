@@ -39,5 +39,6 @@ export const THEME_MODE = {
 
 export const STRING = {
     EMPTY: '',
-    SPACE_REGULAR_EXPRESSION: /^\S*$/
+    SPACE_REGULAR_EXPRESSION: /^\S*$/,
+    NONE: 'N/A'
 }
