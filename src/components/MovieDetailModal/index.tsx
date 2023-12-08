@@ -33,7 +33,7 @@ const MovieDetailModal = (props: DetailProps) => {
                 value: (checkOwnProperty(data, item.label) ? data[item.label] : '')
             }))
             setMovieDetail(listData);
-            setOpenToast(checkOwnProperty(data, 'Error') ? true : false);
+            setOpenToast(checkOwnProperty(data, 'Error'));
         }
     }, [data]);
     
@@ -55,9 +55,10 @@ const MovieDetailModal = (props: DetailProps) => {
                                     width="300"
                                     height="auto"
                                     src={
-                                        data?.Poster !== STRING.NONE
-                                            ? data?.Poster
-                                            : NoImage
+                                        data?.Poster === STRING.NONE ||
+                                        checkOwnProperty(data, "Error")
+                                            ? NoImage
+                                            : data?.Poster
                                     }
                                     alt={title}
                                 />
@@ -68,12 +69,16 @@ const MovieDetailModal = (props: DetailProps) => {
                                         <ListItem key={row.id}>
                                             <Grid container>
                                                 <Grid item xs={2}>
-                                                    <Typography fontWeight={"bold"}>
+                                                    <Typography
+                                                        fontWeight={"bold"}
+                                                    >
                                                         {row.label}:
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={10}>
-                                                    <Typography>{row.value}</Typography>
+                                                    <Typography>
+                                                        {row.value}
+                                                    </Typography>
                                                 </Grid>
                                             </Grid>
                                         </ListItem>

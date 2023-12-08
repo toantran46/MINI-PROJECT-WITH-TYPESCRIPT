@@ -5,11 +5,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useHomeSlice } from '../../store/homeSlice';
 
-let timeoutId: number;
-const delay = 1000;
 
 const SearchBox = () => {
-   
+   let timeoutId: number;
+   const DELAY = 1000;
    const {changeMovieSearch, searchInput} = useHomeSlice();
    const [searchTerm, setSearchTerm] = useState(searchInput);
    
@@ -19,8 +18,8 @@ const SearchBox = () => {
    const debouncedSearch = (searchKey: string) => {
       clearTimeout(timeoutId);     
       timeoutId = setTimeout(() => {
-         changeMovieSearch(searchKey);
-      }, delay);
+          changeMovieSearch(searchKey);
+      }, DELAY);
    }
 
    const onResetSearch = () => {

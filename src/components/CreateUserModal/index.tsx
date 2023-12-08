@@ -92,12 +92,7 @@ const CreateUserModal = (props: CreateModalProps) => {
 
     return (
         <>
-            <Dialog
-                open={open}
-                onClose={onCloseDialog}
-                fullWidth
-                maxWidth="sm"
-            >
+            <Dialog open={open} onClose={onCloseDialog} fullWidth maxWidth="sm">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogTitle align="center">
                         {userId ? "Edit User" : "Create new User"}
@@ -116,13 +111,11 @@ const CreateUserModal = (props: CreateModalProps) => {
                                             variant="outlined"
                                             placeholder="Username..."
                                             fullWidth
-                                            error={
-                                                errors.username ? true : false
-                                            }
+                                            error={Boolean(errors.username)}
                                             helperText={
                                                 errors.username?.message
                                             }
-                                            disabled={userId ? true : false}
+                                            disabled={Boolean(userId)}
                                         />
                                     )}
                                 />
@@ -139,7 +132,7 @@ const CreateUserModal = (props: CreateModalProps) => {
                                             variant="outlined"
                                             placeholder="Email..."
                                             fullWidth
-                                            error={errors.email ? true : false}
+                                            error={Boolean(errors.email)}
                                             helperText={errors.email?.message}
                                         />
                                     )}
@@ -158,11 +151,7 @@ const CreateUserModal = (props: CreateModalProps) => {
                                             type="number"
                                             placeholder="Phone..."
                                             fullWidth
-                                            error={
-                                                errors.phoneNumber
-                                                    ? true
-                                                    : false
-                                            }
+                                            error={Boolean(errors.phoneNumber)}
                                             helperText={
                                                 errors.phoneNumber?.message
                                             }
@@ -171,7 +160,7 @@ const CreateUserModal = (props: CreateModalProps) => {
                                 />
                             </FormGroup>
                             <FormGroup sx={formGroup}>
-                                <FormLabel>Username</FormLabel>
+                                <FormLabel>Address</FormLabel>
                                 <Controller
                                     name="address"
                                     control={control}
