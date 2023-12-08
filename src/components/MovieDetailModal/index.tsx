@@ -3,7 +3,7 @@ import { MovieDetailService } from "../../services/Services";
 import { useQuery } from "@tanstack/react-query";
 import { movieDetailRow } from "../../common/dummyData";
 import { useEffect, useState } from "react";
-import { Row } from "../../types/types";
+import { Row } from "../../entities/types";
 import Toast from "../Toast";
 import { checkOwnProperty } from "../../common/common";
 import NoImage from '../../assets/image-not-found.jpg';

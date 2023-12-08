@@ -1,7 +1,7 @@
 import { createSlice} from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "./store";
-import { UserInfo } from "../types/types";
+import { UserInfo } from "../entities/types";
 import { userInfoDummy } from "../common/dummyData";
 import { GenerateUUid } from "../common/common";
 

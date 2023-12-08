@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiResponse } from "../types/types";
+import { ApiResponse } from "../entities/types";
 import { URL_SERVICE } from "../constants/Constants";
 
 export const MovieService = async (searchKey: string, page: number) => {

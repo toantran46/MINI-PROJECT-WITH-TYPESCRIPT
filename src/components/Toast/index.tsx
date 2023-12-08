@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material"
-import { Horizontal, Status, Vertical } from "../../types/types";
+import { Horizontal, Status, Vertical } from "../../entities/types";
 
 interface ToastProps {
     open: boolean,
@@ -15,7 +15,7 @@ const Toast = (props: ToastProps) => {
     return (
         <Snackbar 
             open={open} 
-            autoHideDuration={5000} 
+            autoHideDuration={3000} 
             onClose={onClose} 
             anchorOrigin={{
                 vertical: vertical,

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Status, UserInfo } from "../../types/types";
+import { Status, UserInfo } from "../../entities/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHomeSlice } from "../../store/homeSlice";
 import { validationSchema } from "../../yup/schema";

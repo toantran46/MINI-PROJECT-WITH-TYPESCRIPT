@@ -1,4 +1,4 @@
-import { Column, Row, UserInfo } from "../types/types";
+import { Column, Row, UserInfo } from "../entities/types";
 import { GenerateUUid } from "./common";
 
 export const userInfoDummy: UserInfo[] = [
