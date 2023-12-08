@@ -4,6 +4,7 @@ import LightBox from '../LightBox';
 import { navLinks } from '../../common/common';
 import { flexBetweenSpace } from '../styles/styles';
 import { useHomeSlice } from '../../store/homeSlice';
+import { HOVER_COLOR } from '../../constants/Constants';
 
 const Navbar = () => {
   const {isDarkMode} = useHomeSlice()
@@ -21,7 +22,7 @@ const Navbar = () => {
                   '&:hover': {
                     borderRadius: 1,
                     color: isDarkMode ? 'white' : 'dark',
-                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.1)'
+                    backgroundColor: isDarkMode ? HOVER_COLOR.DARK.BACKGROUND : HOVER_COLOR.LIGHT.BACKGROUND
                   },
                     borderRadius: 1,
                     backgroundColor: 'transparent'

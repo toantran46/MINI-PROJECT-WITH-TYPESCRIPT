@@ -36,7 +36,9 @@ export const HomeSlice = createSlice({
         },
         removeUser: (state, action: PayloadAction<string | undefined>) => {
             const index = state.userInfo.findIndex(item => item.id === action.payload);
-            state.userInfo.splice(index, 1);
+            if (index > -1) {
+                state.userInfo.splice(index, 1);
+            }
         },
         onChangeDarkMode: (state) => {
             state.isDarkMode = !state.isDarkMode;

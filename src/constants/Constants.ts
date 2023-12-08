@@ -41,7 +41,8 @@ export const STRING = {
     EMPTY: '',
     SPACE_REGULAR_EXPRESSION: /^\S*$/,
     NONE: 'N/A',
-    FALSE: 'False'
+    FALSE: 'False',
+    BACKDROP: 'backdropClick'
 }
 
 export const TOAST_MESSAGE = {
@@ -54,4 +55,13 @@ export const TOAST_MESSAGE = {
         USERNAME_EXIST: 'Username is already exist, please try another one!'
     }
     
+}
+
+export const HOVER_COLOR = {
+    DARK: {
+        BACKGROUND: 'rgba(255, 255, 255, 0.08)'
+    },
+    LIGHT: {
+        BACKGROUND:  'rgba(0, 0, 0, 0.1)'
+    }
 }

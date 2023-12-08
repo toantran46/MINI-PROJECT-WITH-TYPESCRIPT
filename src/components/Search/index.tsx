@@ -33,7 +33,7 @@ const SearchBox = () => {
    return (
       <Box sx={{display: 'flex', float: 'right', marginBottom: 2}}>
          <TextField
-            sx={{width: '25vw'}}
+            sx={{width: '20vw'}}
             size='small' 
             onChange={handleSearchChange}
             placeholder="Search here..."

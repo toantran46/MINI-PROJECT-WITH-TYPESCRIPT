@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, List, ListItem, Typography, CircularProgress, Box } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, List, ListItem, CircularProgress, Box, Typography } from "@mui/material";
 import { MovieDetailService } from "../../services/Services";
 import { useQuery } from "@tanstack/react-query";
 import { movieDetailRow } from "../../common/dummyData";
@@ -39,48 +39,73 @@ const MovieDetailModal = (props: DetailProps) => {
     
     return (
         <>
-            <Dialog 
-                open={open} 
-                onClose={onClose} 
-                fullWidth
-                maxWidth="lg">
-                <DialogTitle textAlign={'center'}>{title}</DialogTitle>
-                <DialogContent sx={{marginTop: 2}}>
-                    {isLoading ? <Box textAlign={'center'}><CircularProgress/></Box> :
-                    <Grid container spacing={2}>
-                        <Grid item xs={4} textAlign={'center'}>
-                            <img width="300" height="auto" src={data?.Poster !== STRING.NONE ? data?.Poster : NoImage} alt={title} />
+            <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg">
+                <DialogTitle textAlign={"center"} fontWeight={"bold"}>
+                    {title}
+                </DialogTitle>
+                <DialogContent sx={{ marginTop: 2 }}>
+                    {isLoading ? (
+                        <Box textAlign={"center"}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Grid container spacing={2}>
+                            <Grid item xs={4} textAlign={"center"}>
+                                <img
+                                    width="300"
+                                    height="auto"
+                                    src={
+                                        data?.Poster !== STRING.NONE
+                                            ? data?.Poster
+                                            : NoImage
+                                    }
+                                    alt={title}
+                                />
+                            </Grid>
+                            <Grid item xs={8}>
+                                <List>
+                                    {movieDetail.map((row) => (
+                                        <ListItem key={row.id}>
+                                            <Grid container>
+                                                <Grid item xs={2}>
+                                                    <Typography fontWeight={"bold"}>
+                                                        {row.label}:
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={10}>
+                                                    <Typography>{row.value}</Typography>
+                                                </Grid>
+                                            </Grid>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={8}>
-                            <List>
-                                {movieDetail.map((row) => (
-                                <ListItem key={row.id}>
-                                    <Grid container>
-                                        <Grid item xs={2}><Typography>{row.label}:</Typography></Grid>
-                                        <Grid item xs={10}><Typography>{row.value}</Typography></Grid>
-                                    </Grid>
-                                </ListItem>
-                                ))}
-                            </List>
-                        </Grid>
-                    </Grid>
-                    }
+                    )}
                 </DialogContent>
                 <DialogActions sx={dialogActionStyle}>
-                    <Button onClick={onClose} color="primary" variant="outlined">
+                    <Button
+                        onClick={onClose}
+                        color="primary"
+                        variant="outlined"
+                    >
                         Close
                     </Button>
                 </DialogActions>
             </Dialog>
             <Toast
                 open={openToast}
-                message={data && checkOwnProperty(data, 'Error') ? data?.Error : "An error occurred!"}
+                message={
+                    data && checkOwnProperty(data, "Error")
+                        ? data?.Error
+                        : "An error occurred!"
+                }
                 onClose={() => setOpenToast(false)}
-                status='error'
-                vertical='top'
-                horizontal='center'
+                status="error"
+                vertical="top"
+                horizontal="center"
             />
         </>
-    )
+    );
 }
 export default MovieDetailModal;

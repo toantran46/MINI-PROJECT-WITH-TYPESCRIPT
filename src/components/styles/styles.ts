@@ -32,3 +32,10 @@ export const dialogActionStyle = {
     marginBottom: 1, 
     marginRight: 1
 }
+
+export const maxHeighTableRow = {
+    maxHeight: '110px',
+    height: '110px',
+    overflow: 'hidden',
+    padding: 1
+}

@@ -13,18 +13,6 @@ export interface ApiResponse {
     Error?: string 
 }
 
-export interface MovieDetailResponse {
-    Title: string,
-    Year: string,
-    Rated: string,
-    Released: string,
-    BoxOffice: string,
-    Writer: string,
-    Country: string,
-    Language: string,
-    Plot: string,
-}
-
 export interface Column {
     id: string;
     label: string;
@@ -34,11 +22,11 @@ export interface Column {
 }
 
 export class UserInfo {
-    id?: string = undefined;
+    id? = '';
     username = '';
     email = '';
     phoneNumber = '';
-    address?: string = undefined;
+    address? = '';
 }
 
 export interface Row {

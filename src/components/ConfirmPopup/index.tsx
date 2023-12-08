@@ -16,7 +16,7 @@ const ConfirmPopup = (props: ConfirmProps) => {
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>{content}</DialogContent>
             <DialogActions sx={dialogActionStyle}>
-                <Button onClick={onConfirm} color="primary" variant="contained">
+                <Button onClick={onConfirm} color="secondary" variant="contained">
                     Confirm
                 </Button>
                 <Button onClick={onClose} color="primary" variant="outlined">
