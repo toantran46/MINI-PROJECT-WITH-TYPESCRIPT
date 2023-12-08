@@ -8,6 +8,7 @@ import Toast from "../Toast";
 import { checkOwnProperty } from "../../common/common";
 import NoImage from '../../assets/image-not-found.jpg';
 import { dialogActionStyle } from "../styles/styles";
+import { STRING } from "../../constants/Constants";
 
 interface DetailProps {
     open: boolean,
@@ -43,12 +44,12 @@ const MovieDetailModal = (props: DetailProps) => {
                 onClose={onClose} 
                 fullWidth
                 maxWidth="lg">
-                <DialogTitle textAlign={'center'} pb={2} variant="h5">{title}</DialogTitle>
-                <DialogContent>
+                <DialogTitle textAlign={'center'}>{title}</DialogTitle>
+                <DialogContent sx={{marginTop: 2}}>
                     {isLoading ? <Box textAlign={'center'}><CircularProgress/></Box> :
                     <Grid container spacing={2}>
                         <Grid item xs={4} textAlign={'center'}>
-                            <img width="300" height="auto" src={data?.Poster || NoImage} alt={title} />
+                            <img width="300" height="auto" src={data?.Poster !== STRING.NONE ? data?.Poster : NoImage} alt={title} />
                         </Grid>
                         <Grid item xs={8}>
                             <List>
